@@ -3,7 +3,7 @@ title: Ford Tube API Gateway
 ---
 # Introduction
 
-This document will walk you through the implementation of the Ford Tube API Gateway. The purpose of this gateway is to manage and route API requests to the <SwmLink doc-title="VBrick API Gateway ">[VBrick API Gateway ](/.swm/vbrick-api-gateway.jttcfbst.sw.md)</SwmLink> efficiently while ensuring security and scalability.
+This document will walk you through the implementation of the Ford Tube API Gateway. The purpose of this gateway is to manage and route API requests to the <SwmLink doc-title="Endpoints and Services">[Endpoints and Services](/.swm/endpoints-and-services.jttcfbst.sw.md)</SwmLink> efficiently while ensuring security and scalability.
 
 We will cover:
 
