@@ -1,0 +1,11 @@
+.minimal {
+    .angular-editor-toolbar-set:nth-of-type(3),
+    .angular-editor-toolbar-set:nth-of-type(4),
+    .angular-editor-toolbar-set:nth-of-type(6),
+    .angular-editor-toolbar-set:nth-of-type(7),
+    .angular-editor-toolbar-set:nth-of-type(8),
+    .angular-editor-toolbar-set:nth-of-type(9),
+    .angular-editor-button[title='Insert Image'] {
+        display: none !important;
+    }
+}

@@ -1,0 +1,26 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/bootstrap/variables';
+:host {
+    .list-group-item {
+        padding: 2.5rem 3.75rem;
+        .btn {
+            min-width: 8.4375rem;
+        }
+        h6 {
+            color: $brand-light;
+            font-weight: 900;
+            font-size: .875rem;
+            margin: 0;
+            line-height: 1.125rem;
+        }
+        span {
+            color: $gray-650;
+            font-weight: 900;
+            font-size: .6875rem;
+        }
+        img {
+            min-width: 160px;
+            max-width: 160px;
+        }
+    }
+}

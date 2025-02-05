@@ -1,0 +1,63 @@
+﻿
+
+/**
+ * Enum for: FordTube.VBrick.Wrapper.Enums.VbrickMappingsType
+ */
+export enum VbrickMappingsType {
+
+  FeaturedName = 0,
+  FeaturedId = 1,
+  LincolnId = 2,
+  FordId = 3,
+  PendingId = 4,
+  ArchiveId = 5,
+  ExpiredId = 6,
+  FeaturedLincolnName = 7,
+  FeaturedLincolnId = 8,
+  LincolnCategoryName = 9,
+  FordCategoryName = 10,
+  FordDealerId = 11,
+  LincolnDealerId = 12,
+  FordPrivateId = 13,
+  LincolnPrivateId = 14,
+  FordFlaggedId = 15,
+  LincolnFlaggedId = 16,
+  FordApprovalCategoryId = 17,
+  LincolnApprovalCategoryId = 18,
+  OwnerNameId = 19,
+  OwnerEmailId = 20,
+  ContactsNameId = 21,
+  ContactsEmailId = 22,
+  PartOfSeriesId = 23,
+  OfficialUserId = 24,
+  NotesFieldId = 25,
+  UploadDateFieldId = 26,
+  UploadLaterFieldId = 27,
+  RejectedCategoryId = 28,
+  UploaderID = 29,
+  UploadLaterCategoryId = 30,
+  SrtFileNameFieldId = 31,
+  OfficialCategoryId = 32,
+  AdminCategoryId = 33,
+  RestrictionsCategoryId = 34,
+  MarketsCategoryId = 35,
+  CentralCategoryId = 36,
+  GreatLakesCategoryId = 37,
+  NortheastCategoryId = 38,
+  SoutheastCategoryId = 39,
+  WestCategoryId = 40,
+  RolesCategoryId = 41,
+  DealerPrincipalCategoryId = 42,
+  FIManagerCategoryId = 43,
+  PartsDeptCategoryId = 44,
+  PartsManagerCategoryId = 45,
+  SalesConFulCategoryId = 46,
+  SalesConsultantCategoryId = 47,
+  SalesManagerCategoryId = 48,
+  ServiceDeptCategoryId = 49,
+  ServiceBodyShopMgrCategoryId = 50,
+  TechnicianCategoryId = 51,
+}
+ 
+
+

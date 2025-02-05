@@ -1,0 +1,28 @@
+// Ensure all Angular links show the pointer on hover
+[ng-reflect-router-link],
+[ngbdropdowntoggle],
+.pointer,
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.cursor-default {
+  cursor: default !important;
+}
+
+.cursor-progress {
+  cursor: progress !important;
+}
+
+.cursor-not-allowed,
+.cursor-disabled {
+  cursor: not-allowed !important;
+}
+
+:disabled,
+.disabled,
+[disabled] {
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  opacity: 0.65;
+}

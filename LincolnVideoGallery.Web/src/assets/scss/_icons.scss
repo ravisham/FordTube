@@ -1,0 +1,284 @@
+.icon {
+  &[class^='lincoln-'],
+  &[class*=' lincoln-'] {
+    font-family: 'lincoln-icons' !important;
+  }
+  &[class^='fa-'],
+  &[class*=' fa-'] {
+    font-family: 'fontawesome' !important;
+  }
+  speak: none;
+  display: inline-block;
+  font-style: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  text-rendering: auto;
+  text-align: center;
+  line-height: 1;
+  font-size: 16px;
+  vertical-align: middle;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  &.lg {
+    font-size: 1.33333em;
+  }
+  &.xs {
+    font-size: 0.75em;
+  }
+  &.sm {
+    font-size: 0.875em;
+  }
+  &.xl {
+    font-size: 2em;
+  }
+  &.xxl {
+    font-size: 4em;
+  }
+  &.lincoln-facebook-solid:before {
+    content: '\21';
+  }
+  &.lincoln-star:before {
+    content: '\23';
+  }
+  &.lincoln-fullscreen:before {
+    content: '\24';
+  }
+  &.lincoln-expand:before {
+    content: '\24';
+  }
+  &.lincoln-star-solid:before {
+    content: '\25';
+  }
+  &.lincoln-circle:before {
+    content: '\26';
+  }
+  &.lincoln-square-plus:before {
+    content: '\28';
+  }
+  &.lincoln-square-check:before {
+    content: '\29';
+  }
+  &.lincoln-circle-check-solid:before {
+    content: '\2a';
+  }
+  &.lincoln-dash-cluster-icon:before {
+    content: '\2b';
+  }
+  &.lincoln-pop-out:before {
+    content: '\30';
+  }
+  &.lincoln-chat-bubble:before {
+    content: '\31';
+  }
+  &.lincoln-instagram:before {
+    content: '\32';
+  }
+  &.lincoln-camera:before {
+    content: '\32';
+  }
+  &.lincoln-printer:before {
+    content: '\33';
+  }
+  &.lincoln-print:before {
+    content: '\33';
+  }
+  &.lincoln-paper-airplane:before {
+    content: '\34';
+  }
+  &.lincoln-map-search:before {
+    content: '\35';
+  }
+  &.lincoln-mouse:before {
+    content: '\36';
+  }
+  &.lincoln-fuel-pump:before {
+    content: '\37';
+  }
+  &.lincoln-speaker:before {
+    content: '\38';
+  }
+  &.lincoln-volume:before {
+    content: '\38';
+  }
+  &.lincoln-volume-mute:before {
+    content: '\39';
+  }
+  &.lincoln-mute:before {
+    content: '\39';
+  }
+  &.lincoln-charge:before {
+    content: '\3d';
+  }
+  &.lincoln-battery:before {
+    content: '\3d';
+  }
+  &.lincoln-twitter-solid:before {
+    content: '\40';
+  }
+  &.lincoln-hand-key:before {
+    content: '\42';
+  }
+  &.lincoln-guage:before {
+    content: '\43';
+  }
+  &.lincoln-refresh:before {
+    content: '\44';
+  }
+  &.lincoln-flag:before {
+    content: '\45';
+  }
+  &.lincoln-plus:before {
+    content: '\46';
+  }
+  &.lincoln-search:before {
+    content: '\47';
+  }
+  &.lincoln-arrow-right:before {
+    content: '\48';
+  }
+  &.lincoln-shield-check:before {
+    content: '\49';
+  }
+  &.lincoln-shield-key:before {
+    content: '\4a';
+  }
+  &.lincoln-chevron-right:before {
+    content: '\4b';
+  }
+  &.lincoln-chevron-left:before {
+    content: '\4c';
+  }
+  &.lincoln-price-tag:before {
+    content: '\4d';
+  }
+  &.lincoln-clipboard-check:before {
+    content: '\4e';
+  }
+  &.lincoln-chevron-down:before {
+    content: '\4f';
+  }
+  &.lincoln-wallet:before {
+    content: '\50';
+  }
+  &.lincoln-chevron-up:before {
+    content: '\51';
+  }
+  &.lincoln-send:before {
+    content: '\52';
+  }
+  &.lincoln-home:before {
+    content: '\53';
+  }
+  &.lincoln-check:before {
+    content: '\54';
+  }
+  &.lincoln-grid:before {
+    content: '\56';
+  }
+  &.lincoln-list:before {
+    content: '\57';
+  }
+  &.lincoln-circle-play:before {
+    content: '\58';
+  }
+  &.lincoln-circle-information:before {
+    content: '\59';
+  }
+  &.lincoln-image:before {
+    content: '\5a';
+  }
+  &.lincoln-chain:before {
+    content: '\5e';
+  }
+  &.lincoln-link:before {
+    content: '\5e';
+  }
+  &.lincoln-tow-truck:before {
+    content: '\5f';
+  }
+  &.lincoln-logo:before {
+    content: '\61';
+  }
+  &.lincoln-park:before {
+    content: '\62';
+  }
+  &.lincoln-diamond:before {
+    content: '\63';
+  }
+  &.lincoln-person-doorman:before {
+    content: '\64';
+  }
+  &.lincoln-car:before {
+    content: '\65';
+  }
+  &.lincoln-envelope:before {
+    content: '\66';
+  }
+  &.lincoln-mail:before {
+    content: '\66';
+  }
+  &.lincoln-person:before {
+    content: '\67';
+  }
+  &.lincoln-map-marker:before {
+    content: '\68';
+  }
+  &.lincoln-key:before {
+    content: '\69';
+  }
+  &.lincoln-person-bow-tie:before {
+    content: '\6a';
+  }
+  &.lincoln-person-concierge:before {
+    content: '\6a';
+  }
+  &.lincoln-concierge:before {
+    content: '\6a';
+  }
+  &.lincoln-lock:before {
+    content: '\6b';
+  }
+  &.lincoln-unlock:before {
+    content: '\6c';
+  }
+  &.lincoln-triangle-caution:before {
+    content: '\6d';
+  }
+  &.lincoln-caution:before {
+    content: '\6d';
+  }
+  &.lincoln-circle-check:before {
+    content: '\6e';
+  }
+  &.lincoln-business:before {
+    content: '\6f';
+  }
+  &.lincoln-phone:before {
+    content: '\70';
+  }
+  &.lincoln-location-arrow:before {
+    content: '\71';
+  }
+  &.lincoln-calendar:before {
+    content: '\72';
+  }
+  &.lincoln-x:before {
+    content: '\74';
+  }
+  &.lincoln-arrow-curve-down-left:before {
+    content: '\75';
+  }
+  &.lincoln-bell:before {
+    content: '\76';
+  }
+  &.lincoln-arrow-curve-up-right:before {
+    content: '\77';
+  }
+  &.lincoln-bell-service:before {
+    content: '\79';
+  }
+  &.lincoln-download:before {
+    content: '\7a';
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "LincolnVideoGallery.Web": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Debug"
+      },
+      "applicationUrl": "https://localhost:5001",
+      "hotReloadEnabled": true
+    }
+  }
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="/" />
+    <meta charset="utf-8" />
+    <title>Ford Tube</title>
+    <meta name="description" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="og:locale" content="en_US" />
+    <meta name="og:site_name" content="Ford Tube" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Ford Tube" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/icons/apple-touch-icon.png" />
+    <link rel="mask-icon" href="/assets/img/icons/safari-pinned-tab.svg" color="#1c396d" />
+    <link rel="icon" type="image/x-icon" sizes="16x16 32x32 64x64" href="favicon.ico" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#1976d2" />
+    <META NAME="ROBOTS" CONTENT="NONE" />
+    <!-- OneTrust Cookies Consent Notice start -->
+    <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="554d1738-e0a5-40ef-abb2-19cca4578f84"></script>
+    <script>
+        function OptanonWrapper() { }
+    </script>
+    <!-- OneTrust Cookies Consent Notice end -->
+    <!-- Google Tag Manager -->
+    <script type="text/plain" class="optanon-category-6">
+        (function(w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        const f = d.getElementsByTagName(s)[0];
+        const j = d.createElement(s);
+        const dl = l != "dataLayer" ? `&l=${l}`: "";
+        j.async = true;
+        j.src = `https://www.googletagmanager.com/gtm.js?id=${i}${dl}`;
+        f.parentNode.insertBefore(j, f);
+        })(window, document, "script", "dataLayer", "GTM-N9G6HGX");
+    </script>
+    <!-- End Google Tag Manager -->
+    <meta name="theme-color" content="#1976d2">
+    <style>
+        /* Critical CSS for fallback loading message */
+        #fallback-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            color: #000000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            z-index: 9999;
+        }
+
+        #error-message {
+            display: none;
+            color: #adb5bd;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #1c396d;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fallback loading message -->
+    <div id="fallback-loading">
+        <div class="loader"></div>
+        <span id="error-message">We are working on your request to visit the Ford Tube site.  Due to high traffic volumes, this could take a few minutes.  Thank you for your patience as we connect you.</span>
+    </div>
+
+    <app-root></app-root>
+
+    <script>
+        var loaderTimeout, errorTimeout;
+
+        // Show the loading indicator after 3 seconds
+        loaderTimeout = setTimeout(function () {
+            document.getElementById('fallback-loading').style.display = 'flex';
+        }, 3000); // 3 seconds
+
+        // Hide the fallback loading message when Angular is initialized
+        document.addEventListener('DOMContentLoaded', function () {
+            clearTimeout(loaderTimeout);
+            clearTimeout(errorTimeout);
+            document.getElementById('fallback-loading').style.display = 'none';
+        });
+
+        // Show the error message if Angular hasn't initialized within 20 seconds
+        errorTimeout = setTimeout(function () {
+            var fallbackLoading = document.getElementById('fallback-loading');
+            if (fallbackLoading && fallbackLoading.style.display !== 'none') {
+                document.querySelector('.loader').style.display = 'none';
+                document.getElementById('error-message').style.display = 'block';
+            }
+        }, 20000); // 20 seconds in total
+    </script>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N9G6HGX"
+                height="0"
+                width="0"
+                style="display: none; visibility: hidden">
+        </iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+</body>
+</html>

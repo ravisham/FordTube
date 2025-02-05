@@ -1,0 +1,29 @@
+<aside [@transform]="toggleMenu">
+  <nav class="list-group">
+    <a class="list-group-item list-group-item-action" routerLink="/search">Search</a>
+    <a class="list-group-item list-group-item-action" routerLink="/live"> <i class="fab fa-youtube-square fa-2x align-middle mr-2 fa-fw"></i>LIVE </a>
+   <!-- <a class="list-group-item list-group-item-action" [routerLink]="['/highest-rated']" [queryParams]="{ s: 'score' }">
+      <i class="far fa-thumbs-up fa-2x align-middle mr-2 fa-fw"></i>Highest Rated
+    </a> -->
+    <a class="list-group-item list-group-item-action" *ngIf="categories.length > 0">
+      <div class="vid-categories-list ignore-click" [ngClass]="!isCollapsed ? 'expanded' : ''" (click)="isCollapsed = !isCollapsed">
+        <i class="far fa-folder-open fa-2x align-middle mr-2 fa-fw"></i>Video Categories&nbsp;
+        <i *ngIf="isCollapsed" class="fas fa-chevron-down"></i>
+        <i *ngIf="!isCollapsed" class="fas fa-chevron-up"></i>
+      </div>
+      <div [ngbCollapse]="isCollapsed">
+        <a *ngFor="let category of categories" class="list-group-item list-group-item-action" [routerLink]="['/category']" [id]="category.fullpath" [queryParams]="{ c: category.categoryId }">
+          {{ category.name }}
+        </a>
+      </div>
+    </a>
+    <a *ngIf="showEmployeeDealerItems" class="list-group-item list-group-item-action" routerLink="/upload">
+      <i class="fas fa-upload fa-2x align-middle mr-2 fa-fw"></i>Upload a Video
+    </a>
+    <a *ngIf="showEmployeeDealerItems" class="list-group-item list-group-item-action" routerLink="/manage">
+      <i class="fas fa-cogs fa-2x align-middle mr-2 fa-fw"></i>Manage Videos
+    </a>
+    <a class="list-group-item list-group-item-action" routerLink="/faq"> <i class="fas fa-info-circle fa-2x align-middle mr-2 fa-fw"></i>FAQS </a>
+    <a *ngIf="showAdminItems" class="list-group-item list-group-item-action" routerLink="/admin"> <i class="fas fa-user fa-2x align-middle mr-2 fa-fw"></i>Admin Tools </a>
+  </nav>
+</aside>

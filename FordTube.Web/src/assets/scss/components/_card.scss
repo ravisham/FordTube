@@ -1,0 +1,37 @@
+@import '../variables';
+@import '../utilities/_elevation';
+.card {
+    border: none;
+    border-radius: $card-border-radius;
+    -webkit-transition: all 0.15s linear 0s;
+    transition: all 0.15s linear 0s;
+    @include elevation(2);
+    .card-img-top {
+        -webkit-transition: height 0.15s ease-in-out;
+        transition: height 0.15s ease-in-out;
+        height: calc(((720 / 1280) * 33.33vw) - 30px);
+        @include media-breakpoint-down(xs) {
+            height: calc((720 / 1280) * 100vw) !important;
+        }
+    }
+    .card-footer {
+        &.overlay {
+            font-family: 'Antenna-Regular';
+            position: absolute;
+            width: 100%;
+            color: #ffffff;
+            bottom: 0;
+            background: rgba(45, 150, 205, 0.95);
+            min-height: 20px;
+            overflow: hidden;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.75rem;
+        }
+    }
+    &:hover,
+    &:focus {
+        @include elevation(5);
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "bin": true,
+        "Logs": true,
+        "Properties": true,
+        "obj": true,
+        "wwwroot": true,
+        "node_modules": true,
+        ".dccache": true,
+        "browserslist": true,
+        "protractor.conf.js": true,
+        "karma.conf.js": true,
+        ".vscode": true,
+        ".idea": true
+    },
+    "hide-files.files": []
+}

@@ -1,0 +1,35 @@
+@import '../../../assets/scss/variables';
+
+app-faq {   
+
+    color:#dfdfdf !important;
+
+    ngb-accordion {
+        background-color: transparent;
+
+        .card-header {
+            background-color: transparent;
+            color:#dfdfdf !important;
+        }
+
+        a {
+            color:#dfdfdf !important;
+        }
+
+        p {
+            font-size: 0.75rem;
+	    color:#dfdfdf !important;
+        }
+    }
+
+    .card {
+        background-color: transparent;
+        -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15);
+        box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15);
+
+        .card-body {
+            border-bottom: 1px solid #616568;
+            color:#dfdfdf !important;
+        }
+    }
+}

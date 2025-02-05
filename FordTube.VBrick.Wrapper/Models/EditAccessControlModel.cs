@@ -1,0 +1,21 @@
+﻿// Copyright (c) OneMagnify.  All Rights Reserved
+// Unauthorized copying of this file, via any medium is strictly prohibited
+
+namespace FordTube.VBrick.Wrapper.Models
+{
+
+    public class EditAccessControlModel
+    {
+
+        public string Id { get; set; }
+
+        public string Name { get; set; }
+
+        //User/Group/Team
+        public string Type { get; set; }
+
+        public bool CanEdit { get; set; }
+
+    }
+
+}

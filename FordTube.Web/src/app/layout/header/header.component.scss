@@ -1,0 +1,120 @@
+@import "../../../assets/scss/_variables";
+@import "../../../assets/scss/bootstrap/variables";
+@import "../../../assets/scss/utilities/elevation";
+
+:host {
+
+  header {
+    background-color: $white;
+    transform: translate3d(0, 0, 0);
+    @include elevation(2);
+
+    .navbar-toggler {
+      margin-left: $navbar-toggler-margin-x;
+      margin-top: $navbar-toggler-margin-y;
+      margin-bottom: $navbar-toggler-margin-y;
+      height: 60px;
+      width: 60px;
+      border-width: 0 1px 0 0;
+      position: relative;
+
+      small {
+        font-family: 'Antenna-Light';
+        letter-spacing: 0.1px !important;
+        color: #9D9D9D;
+        font-size: 10px;
+        position: absolute;
+        left: 14px;
+        text-transform: uppercase;
+        bottom: 14px;
+      }
+    }
+
+    .fa-search {
+      line-height: 28px;
+      font-size: 25px;
+      cursor: pointer;
+    }
+
+    .navbar-brand {
+      .spacer {
+        //Older Browser support (No Flex)
+        display: inline-block;
+        display: inline-flex;
+        border: 1.5px solid $brand-dark;
+        background: $brand-dark;
+        height: 30px;
+        vertical-align: middle;
+        margin: 0 10px;
+      }
+
+      h1 {
+        text-transform: uppercase;
+        color: $brand-dark;
+        font-size: 1rem;
+        line-height: 32px; //Older Browser support (No Flex)
+        display: inline-block;
+        display: inline-flex;
+        font-family: 'Antenna-Light';
+        font-weight: 400;
+        vertical-align: middle;
+        margin: 0;
+
+        & strong {
+          font-family: 'Antenna-Bold';
+          font-weight: 900;
+        }
+      }
+    }
+
+    small {
+      font-size: .71875rem;
+      line-height: 0.25 !important;
+    }
+
+    @supports (-moz-appearance:none) {
+      small {
+        font-size: .71875rem;
+        line-height: inherit !important;
+      }
+    }
+  }
+
+  ngb-alert {
+    transition: 800ms cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 0 5px black;
+    min-height: 62px;
+
+    .close {
+      padding: 1.15rem 1.25rem;
+    }
+
+    .input-group-append .btn {
+      height: calc(1.75rem + 2px);
+
+      &::-webkit-search-cancel-button {
+        -webkit-appearance: searchfield-cancel-button;
+      }
+    }
+  }
+
+  #browserAlert {
+    font-weight: bold !important;
+    font-size: 1.25rem !important;
+    background-color: #FF8800 !important;
+    border-color: #ffa53e !important;
+    color: white !important;
+  }
+
+  .fixed-alert {
+    position: fixed;
+    top: 65px;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+  }
+
+  #courseVideoCompletionMessage {
+    font-size: 1.15rem;
+  }
+}

@@ -1,0 +1,7 @@
+
+
+<button class="{{cssClass}}" [disabled]="isLoading">
+    <i *ngIf="isLoading" class="{{loadingIconClass}}"></i>
+    <i *ngIf="!isLoading" class="{{iconClass}}"></i>
+    {{text}}
+  </button>

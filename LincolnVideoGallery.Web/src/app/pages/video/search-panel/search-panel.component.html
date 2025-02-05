@@ -1,0 +1,21 @@
+<section class="secondary border-top border-bottom mb-5">
+  <div class="container">
+    <div class="form-row align-items-center align-items-center">
+      <div class="col-md-6">
+        <select [(ngModel)]="category" name="category" class="form-control" (change)="callSearch();">
+          <option *ngFor="let c of categories;" [ngValue]="c.categoryId" [id]="c.fullpath">{{c.fullpath}}</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input [(ngModel)]="query" (keyup.enter)="callSearch()" class="form-control" placeholder="Search" />
+          <div class="input-group-append">
+            <button class="btn btn-primary input-group-text" (click)="callSearch()">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,12 @@
+<ng-progress *ngIf="!isEmbed" [spinner]="false" [color]="'#f26147'"></ng-progress>
+<app-header *ngIf="!isEmbed"></app-header>
+<app-sidenav *ngIf="!isEmbed" appHeaderSearchClose></app-sidenav>
+<main appSideNavClose appHeaderSearchClose>
+  <app-carousel [hidden]="!showCarousel"></app-carousel>
+  <router-outlet></router-outlet>
+</main>
+<section class="text-center text-muted small text-uppercase pb-0" id="disclaimer" appSideNavClose appHeaderSearchClose *ngIf="!isEmbed">
+  The content on this website is confidential and should not be posted on other sites or shared
+</section>
+<app-footer appSideNavClose appHeaderSearchClose *ngIf="!isEmbed"></app-footer>
+

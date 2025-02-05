@@ -1,0 +1,76 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>disable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Configurations>Debug;Production;Staging</Configurations>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="CsvHelper" Version="33.0.1" />
+		<PackageReference Include="Flurl" Version="3.0.7" />
+		<PackageReference Include="Flurl.Http" Version="3.2.4" />
+		<PackageReference Include="Magick.NET-Q16-AnyCPU" Version="13.3.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.31" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.31" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.31" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.31">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="6.35.0" />
+		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.35.0" />
+		<PackageReference Include="Microsoft.OpenApi" Version="1.6.3" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
+		<PackageReference Include="MongoDB.Driver" Version="2.28.0" />
+		<PackageReference Include="OneMagnify.Calendar.EventGenerator" Version="6.0.0" />
+		<PackageReference Include="OneMagnify.Data.Ford.FordTube" Version="6.1.3" />
+		<PackageReference Include="OneMagnify.Dsn" Version="6.0.4" />
+		<PackageReference Include="OneMagnify.Dsn.MongoDb" Version="1.0.0" />
+		<PackageReference Include="OneMagnify.Ford.EntityInfo" Version="6.1.2" />
+		<PackageReference Include="OneMagnify.NetCore.Logging.File" Version="6.0.0" />
+		<PackageReference Include="OneMagnify.P3PMiddleware" Version="6.0.0" />
+		<PackageReference Include="OneMagnify.Xapi" Version="6.3.5" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
+		<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\FordTube.VBrick.Wrapper\FordTube.VBrick.Wrapper.csproj" />
+		<ProjectReference Include="..\FordTube.EmailsService\FordTube.EmailsService.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="Certificates\vbrick.marketingassociates.com.pfx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Certificates\vbrick-stage.marketingassociates.com.pfx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="robots.txt" />
+		<Content Include="Videos\placeholder.avi">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<None Update="appsettings.Debug.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="appsettings.Development.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="appsettings.Production.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="appsettings.Staging.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+</Project>

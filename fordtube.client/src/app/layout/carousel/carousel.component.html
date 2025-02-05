@@ -1,0 +1,10 @@
+<div>
+  <ngb-carousel #carousel [showNavigationArrows]="showControls()" [showNavigationIndicators]="showControls()">
+    <ng-template ngbSlide *ngFor="let slide of slides">
+      <img [src]="slideImagePath + slide.backgroundImageUrl" class="img-fluid" />
+      <div class="carousel-caption {{ slide.textPosition === 1 ? 'right' : 'left' }}">
+        <a (click)="handleLinkClick(slide)" [class.cursor-default]="slide.link === null"> <div [innerHtml]="getTextHtml(slide)"></div> </a>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+</div>

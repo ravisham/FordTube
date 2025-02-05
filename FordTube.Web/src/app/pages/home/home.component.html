@@ -1,0 +1,61 @@
+<div class="container">
+  <section class="text-center">
+    <h3 class="page-heading">{{ getTitle() }}</h3>
+  </section>
+</div>
+
+<section class="secondary border-top border-bottom mb-5">
+  <div class="container">
+    <div class="form-row align-items-center align-items-center">
+      <div class="form-group col-md-3">
+        <label for="query">Search</label>
+        <input [(ngModel)]="filter.query" class="form-control" id="query" (keyup.enter)="callSearch()" placeholder="Search" />
+        <i *ngIf="!isLoading" id="searchComponentInputButton" class="fas fa fa-search" (click)="callSearch()"></i>
+        <i *ngIf="isLoading" id="searchComponentInputLoading" class="fas fa-circle-notch fa-spin"></i>
+      </div>
+
+      <div class="form-group col-md-1">
+        <label id="tagslabel" class="text-center d-block" for="tags">Tags</label>
+        <input type="checkbox" [(ngModel)]="filter.tags" class="form-control border-0" id="tags" (change)="callSearch()" />
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="category">Category</label>
+        <select [(ngModel)]="category" class="form-control" id="category" (change)="callSearch()">
+          <option *ngFor="let c of categories" [ngValue]="c.categoryId" [id]="c.fullpath">{{ c.fullpath }}</option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-2">
+        <label for="sortField">Sort Results By</label>
+        <select [(ngModel)]="filter.sortField" id="sortField" class="form-control" (change)="callSearch()">
+          <option value="0">Title</option>
+          <option value="1">Date</option>
+          <option value="2">Uploader</option>
+          <option value="3">Duration</option>
+          <!--<option value="4">Rating</option>-->
+        </select>
+      </div>
+
+      <div class="form-group col-md-2">
+        <label for="sortDirection">&nbsp;</label>
+        <select [(ngModel)]="filter.sortDirection" id="sortDirection" class="form-control" (change)="callSearch()">
+          <option value="0">Ascending</option>
+          <option value="1">Descending</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row align-items-center align-items-center">
+      <div class="form-group col-md-12">
+        <p>
+          If the "Tags" box is checked, search results show <i> only</i> videos that are tagged with that exact phrase. For a more broad search, uncheck the Tags box and results
+          show videos with that phrase found in order of relevance by: title, description and tags.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <app-videos-list [videos]="videos" [scrollId]="scrollId" [totalVideos]="totalVideos" (moreEvent)="moreVideos($event)"></app-videos-list>
+</div>

@@ -1,0 +1,30 @@
+<ul class="list-group list-group-flush">
+  <li class="list-group-item d-flex align-items-center" *ngFor="let v of videos; let i = index">
+    <!--
+      <div class="order-1">
+        <img [src]="v.thumbnailUrl" class="img-fluid float-left" [routerLink]="['/watch']" [queryParams]="{'v': v.id}">
+      </div>
+    -->
+    <div class="flex-fill order-2 ml-md-5">
+      <div>
+        <h6 [routerLink]="['/watch']" [queryParams]="{ v: v.video.id }" class="d-inline-block text-uppercase">{{ v.video.title }}</h6>
+        <br />
+        <span>{{ v.video.whenUploaded | date: 'mediumDate' }}</span>
+      </div>
+      <div *ngFor="let r of v.reports">
+        <h6>
+          Reported by <b>{{ r.name | nameNormalize }}</b> at <b>{{ r.createdOn | date: 'MM/dd/yyyy h:mma' }}</b>
+        </h6>
+        <span
+          >Comment: <i>{{ r.comment }}</i></span
+        >
+      </div>
+      <div>
+        <div class="btn btn-sm btn-primary" [routerLink]="['/watch']" [queryParams]="{ v: v.video.id }">Watch</div>
+        <div class="btn btn-sm btn-primary" (click)="removeVideo(v.video.id)">Delete</div>
+        <div class="btn btn-sm btn-primary" (click)="unflagVideo(v.video.id)">Unflag</div>
+      </div>
+    </div>
+  </li>
+</ul>
+<app-load-more *ngIf="allowNextButton" (loadMoreEvent)="loadMore()"></app-load-more>

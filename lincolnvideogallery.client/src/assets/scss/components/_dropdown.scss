@@ -1,0 +1,13 @@
+@import "../bootstrap/_variables";
+.dropdown-menu {
+    .dropdown-toggle {
+        cursor: pointer;
+    }
+    .dropdown-item {
+        color: $body-color;
+        &:active,
+        &.active {
+            background-color: transparent;
+        }
+    }
+}

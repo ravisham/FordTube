@@ -1,0 +1,41 @@
+@import '../../../assets/scss/variables';
+:host {
+    .carousel-caption {
+        font-family: LincolnMillerB!important;
+        color: #ffffff;
+        position: absolute;
+        top: 5%;
+        left: 5%;
+        right: auto;
+        z-index: 10;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        text-align: left;
+        max-width: 30%;
+        @media (max-width: 768px) {
+            max-width: 50%;
+            top: 0;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        &.left {
+            @media (max-width: 768px) {
+                left: 8% !important;
+            }
+            left: 5% !important;
+            right: auto !important;
+        }
+        &.right {
+            @media (max-width: 768px) {
+                right: 8% !important;
+            }
+            right: 5% !important;
+            left: auto !important;
+        }
+        a {
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+}

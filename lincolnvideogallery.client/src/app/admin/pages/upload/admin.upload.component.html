@@ -1,0 +1,199 @@
+<div [class.disabled]="loading" class="container-fluid">
+  <div class="col-md-9">
+    <form [formGroup]="form" ngForm (ngSubmit)="onSubmit()">
+      <div *ngIf="loaded" class="alert alert-success">
+        <strong>Video uploaded successfully!</strong> <a *ngIf="videoId != ''" class="btn-link mx-2 text-primary" [routerLink]="['/watch']" [queryParams]="{ v: videoId }">Watch</a>
+      </div>
+      <div class="form-group">
+        <div class="custom-control custom-checkbox custom-control-inline">
+          <input class="custom-control-input" name="placeholderCheckbox" id="placeholderCheckbox" type="checkbox" formControlName="placeholder" />
+          <label class="custom-control-label" for="placeholderCheckbox">Upload Video File later</label>
+        </div>
+      </div>
+      <div *ngIf="!form.value.placeholder" class="form-group">
+        <label for="video">Select Video File:</label> <br />
+        <div class="custom-file">
+          <input type="file" id="video" (change)="upload($event.target.files)" class="form-control custom-file-input" accept="video/*" name="video" #fileInput />
+          <label class="custom-file-label" for="video">{{ fileLabel }}</label>
+          <div class="alert alert-danger" role="alert" *ngIf="!form.value.placeholder && !fileChoosen && form.touched">Please choose file</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="custom-control custom-checkbox custom-control-inline">
+          <input class="custom-control-input" name="is360" id="is360" type="checkbox" formControlName="is360" /> <label class="custom-control-label" for="is360">Is this video 360&deg;?</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="VideoTitle">Title:</label> <input type="text" name="title" formControlName="title" class="form-control" id="VideoTitle" placeholder="Enter Title" />
+        <div class="alert alert-danger" role="alert" *ngIf="!form.controls['title'].valid && form.controls['title'].touched && form.controls['title'].dirty">Please provide title</div>
+      </div>
+      <div class="form-group">
+        <label for="VideoDescription">Description:</label> <textarea name="description" formControlName="description" class="form-control" id="VideoDescription" rows="3"></textarea>
+        <div class="alert alert-danger" role="alert" *ngIf="!form.controls['description'].valid && form.controls['description'].touched && form.controls['description'].dirty">
+          Please provide description
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="VideoTag">Tags:</label> <textarea name="tags" formControlName="tag" class="form-control" id="VideoTag" rows="3"></textarea>
+        <span class="text-muted">Minimum three tags. Use ; symbol between tags.</span>
+        <div class="alert alert-danger" role="alert" *ngIf="!form.controls['tag'].valid && form.controls['tag'].touched && form.controls['tag'].dirty">Please provide minimum three tags</div>
+      </div>
+      <div class="form-group">
+        <label for="franchiseCategory">Franchise:</label>
+        <select name="franchiseCategory" class="form-control" formControlName="franchiseCategory" id="franchiseCategory" (change)="franchiseChanged()">
+          <option *ngFor="let c of franchiseCategories; let i = index" [ngValue]="i">{{ c.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="Categories">Categories:</label>
+        <div class="input-group w-50">
+          <div class="input-group-append w-100">
+            <select style="width: 450px;" name="selected_category" class="form-control" formControlName="selected_category" id="Categories">
+              <option *ngFor="let c of categories; let i = index" [ngValue]="i">{{ c.fullpath }}</option>
+            </select>
+            <button class="btn btn-primary" (click)="addCategory()"><i class="fas fa-plus"></i> Add Selected Category</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group ml-3" [hidden]="selected_categories.length == 0">
+        <label>Selected Categories:</label>
+        <ul class="list-unstyled">
+          <li *ngFor="let c of selected_categories; let i = index">{{ c.fullpath }} <i class="fas fa-times-circle fa-lg text-danger cursor-pointer" (click)="removeSelectedCategory(i)"></i></li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <label for="publishDatePicker">Publish Date</label>
+        <div class="input-group">
+          <div class="input-group-append">
+            <input id="publishDatePicker"
+                   class="form-control"
+                   placeholder="yyyy-mm-dd"
+                   name="publishDate"
+                   [markDisabled]="isPublishDateDisabled"
+                   formControlName="publishDate"
+                   ngbDatepicker
+                   #d1="ngbDatepicker" />
+            <button class="btn btn-primary w-25" (click)="d1.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="expirationDatePicker">Expiration Date</label>
+        <div class="input-group">
+          <div class="input-group-append">
+            <input id="expirationDatePicker"
+                   class="form-control"
+                   placeholder="yyyy-mm-dd"
+                   name="expirationDate"
+                   [markDisabled]="isExpirationDateDisabled"
+                   formControlName="expirationDate"
+                    [readonly]="true"
+                   ngbDatepicker 
+                   #d2="ngbDatepicker" />
+            <button class="btn btn-primary w-25" (click)="d2.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="_boolexpiration">Date must be no longer than one year from Publish Date</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="custom-control custom-checkbox custom-control-inline">
+          <input class="custom-control-input" name="downloadCheckbox" id="downloadCheckbox" type="checkbox" formControlName="enableDownloads" />
+          <label class="custom-control-label" for="downloadCheckbox">Enable Downloads</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="custom-control custom-checkbox custom-control-inline">
+          <input class="custom-control-input" name="restrictedCheckbox" id="restrictedCheckbox" type="checkbox" formControlName="restricted" />
+          <label class="custom-control-label" for="restrictedCheckbox">Restricted Access</label>
+        </div>
+      </div>
+      <div class="form-group ml-3" *ngIf="form.value.restricted">
+        <label>Choose Market Area:</label>
+        <ul id="markets" class="list-unstyled ml-3">
+          <li *ngFor="let g of marketGroups; let i = index">
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" id="marketCheckbox_{{i}}" name="marketCheckbox_{{i}}" (click)="changeMarket(i)" />
+              <label class="custom-control-label" for="marketCheckbox_{{i}}">{{ g.name }}</label>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="form-group ml-3" *ngIf="form.value.restricted">
+        <label>Choose Roles:</label>
+        <ul id="roles" class="list-unstyled ml-3">
+          <li *ngFor="let g of roleGroups; let i = index">
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" id="roleCheckbox_{{i}}" name="roleCheckbox_{{i}}" (click)="changeRole(i)" />
+              <label class="custom-control-label" for="roleCheckbox_{{i}}">{{ g.name }}</label>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <label>Add Closed Caption File:</label>
+        <div *ngIf="showSrtAlert" class="alert alert-danger">
+          <strong>{{ srtMessage }}</strong>
+        </div>
+        <div class="input-group w-50">
+          <div class="input-group-append w-100">
+            <div class="custom-file" style="margin-bottom: 10px;">
+              <input type="file" id="srtFile" (change)="uploadSrt($event.target.files)" class="form-control custom-file-input" name="srtFile" accept=".srt" #srtFile />
+              <label class="custom-file-label" for="srtFile">{{ srtfileLabel }}</label>
+            </div>
+            <button (click)="removeStrFile()" class="btn btn-danger w-25 ml-2" type="button"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Attached files:</label>
+        <div *ngIf="showFileAlert" class="alert alert-danger">
+          <strong>{{ filesMessage }}</strong>
+        </div>
+        <div class="input-group w-50">
+          <div class="input-group-append w-100">
+            <div class="custom-file" style="margin-bottom: 10px;">
+              <input type="file" id="docFile1" (change)="uploadFile($event.target.files, 1)" class="form-control custom-file-input" name="docFile1" #docFile1 />
+              <label class="custom-file-label" for="docFile1">{{ docfileLabel1 }}</label>
+            </div>
+            <button (click)="removeDocument(1)" class="btn btn-danger w-25 ml-2" type="button"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="input-group w-50">
+          <div class="input-group-append w-100">
+            <div class="custom-file" style="margin-bottom: 10px;">
+              <input type="file" id="docFile2" (change)="uploadFile($event.target.files, 2)" class="form-control custom-file-input" name="docFile2" #docFile2 />
+              <label class="custom-file-label" for="docFile2">{{ docfileLabel2 }}</label>
+            </div>
+            <button (click)="removeDocument(2)" class="btn btn-danger w-25 ml-2" type="button"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="input-group w-50">
+          <div class="input-group-append w-100">
+            <div class="custom-file">
+              <input type="file" id="docFile3" (change)="uploadFile($event.target.files, 3)" class="form-control custom-file-input" name="docFile3" #docFile3 />
+              <label class="custom-file-label" for="docFile3">{{ docfileLabel3 }}</label>
+            </div>
+            <button (click)="removeDocument(3)" class="btn btn-danger w-25 ml-2" type="button"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="loading" class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-3 pt-0"></legend>
+          <div class="col-sm-9">
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress">{{ progressLabel }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="offset-3 w-100">
+          <button class="btn btn-primary float-right" title="Upload Video Now" (click)="onSubmit()"><i class="icon ford-upload"></i>&nbsp;Upload Video</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

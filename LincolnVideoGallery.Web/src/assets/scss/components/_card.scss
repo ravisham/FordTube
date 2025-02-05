@@ -1,0 +1,35 @@
+@import '../variables';
+@import '../utilities/_elevation';
+.card {
+  border: none;
+  border-radius: $card-border-radius;
+  transition: all 0.15s linear 0s;
+  @include elevation(2);
+  .card-img-top {
+    transition: height 0.15s ease-in-out;
+    height: calc(((720 / 1280) * 33.33vw) - 30px);
+    @include media-breakpoint-down(xs) {
+      height: calc((720 / 1280) * 100vw) !important;
+    }
+  }
+    .card-footer {
+        border: none;
+        &.overlay {
+            font-family: 'LincolnProximaNova';
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            color: $white;
+            background-color: rgba($brand-light, 0.9);
+			min-height: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.75rem;
+        }
+    }
+    &:hover,
+    &:focus {
+        @include elevation(5);
+    }
+}

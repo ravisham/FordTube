@@ -1,0 +1,6 @@
+﻿<parameters>
+  <setParameter
+    name="IIS Web Application Name"
+    value="vbrick.marketingassociates.com" />
+ 
+</parameters>

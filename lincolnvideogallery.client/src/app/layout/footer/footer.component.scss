@@ -1,0 +1,81 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/bootstrap/variables';
+:host {
+    footer {
+        .search {
+            background-color: $white;
+            padding: 35px 0 !important;
+            form {
+                font-size: 1.625rem;
+                input {
+                    background-color: transparent !important;
+                    box-shadow: none !important;
+                    border: none !important;
+                    outline: none !important;
+                    font-size: inherit;
+                    color: $black;
+                    padding: 0;
+                    &::placeholder {
+                        color: $black !important;
+                    }
+                }
+                i {
+                    color: $black !important;
+                    font-size: inherit;
+                    padding: 0 1rem 0 0;
+                }
+            }
+        }
+        main {
+            background-color: $brand-medium;
+            ul {
+                li {
+                    &.strong {
+                        font-size: 0.95rem;
+                        font-weight: 900;
+                        color: $white;
+						 @media (max-width: 576px) {
+                            cursor: pointer;
+                        }
+                        &[aria-expanded='false'] {
+                            @media (max-width: 576px) {
+                                padding: 1rem 0;
+                            }
+                        }
+                        i {
+                            display: none;
+                            @media (max-width: 576px) {
+                                display: inline-block;
+                            }
+                        }
+                    }
+                    a {
+                        line-height: 2.1rem;
+                        padding: 5px 0;
+                        font-size: 0.85rem;
+                        color: $white;
+                        &:hover {
+                            text-decoration: none;
+                            color: $brand-lightest;
+                        }
+                    }
+					&:empty {
+                        display: none;
+                    }
+                }
+				ul {
+                    &.collapse {
+                        @media (min-width: 576px) {
+                            display: block !important;
+                        }
+                    }
+                }
+            }
+        }
+        .copyright {
+            background-color: $body-bg;
+            color: #95989A;
+            font-size: 13px;
+        }
+    }
+}

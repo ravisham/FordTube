@@ -1,0 +1,5 @@
+<app-load-more-template #loadMoreDirective="loadMoreInstance" (loadMoreEvent)="loadMoreEvent.emit($event)">
+  <section class="text-center">
+    <button class="btn btn-primary" (click)="loadMoreDirective.loadMore()">View More</button>
+  </section>
+</app-load-more-template>

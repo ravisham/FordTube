@@ -1,0 +1,62 @@
+@import '../variables';
+.btn {
+    outline: none;
+    min-height: 50px;
+    max-width: 270px;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: 'LincolnProximaNova';
+    text-transform: uppercase;
+    font-size: 1rem;
+    color: #ffffff;
+    text-align: center;
+    display: inline-block;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15);
+    text-shadow: rgba(0, 0, 0, 0.2) 1px 1px 1px;
+    &:focus {
+        box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15);
+    }
+    &.btn-primary {
+        background-color: $brand-lightest;
+        border: 1px solid $brand-lightest;
+        &:hover {
+            background-color: darken($brand-lightest, 10%);
+            border: 1px solid $brand-dark;
+        }
+        &:active {
+            outline: none;
+            background-color: darken($brand-lightest, 15%) !important;
+            border-color: darken($brand-lightest, 20%) !important;
+        }
+        &:focus {
+            box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15) !important;
+            background-color: darken($brand-lightest, 15%);
+            border-color: darken($brand-lightest, 20%);
+        }
+    }
+    &.btn-white {
+        background-color: $white;
+        color: $body-color;
+    }
+    &.no-transform {
+        text-transform: none;
+    }
+    &-small,
+    &.small {
+        min-height: auto;
+        font-size: 0.75rem;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+}
+
+.input-group-append,
+.input-group-prepend {
+    .btn {
+        height: calc(2.25rem + 2px);
+        min-height: auto;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}

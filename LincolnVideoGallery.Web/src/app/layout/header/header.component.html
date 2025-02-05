@@ -1,0 +1,99 @@
+<app-header-search></app-header-search>
+
+<header class="navbar navbar-light fixed-top">
+  <button class="navbar-toggler mr-3" type="button" (click)="toggle($event)" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon">
+      <small>Menu</small>
+    </span>
+  </button>
+
+  <a class="navbar-brand mr-auto" routerLink="/">
+    <i class="icon lincoln-logo xl"></i>
+
+    <span class="spacer"></span>
+
+    <h1>
+      <span>Lincoln</span>
+      <br />
+      <strong>Video Gallery</strong>
+    </h1>
+  </a>
+
+  <span class="navbar-text mr-0 mr-md-4 ml-auto" (click)="toggleSearch()">
+    <i class="fa fa-search"></i>
+  </span>
+
+  <span class="navbar-text text-muted d-none d-md-flex flex-column text-right" ngbDropdown role="group" display="dynamic">
+    <small>{{ welcomeMessage }}</small>
+    <br />
+    <small ngbDropdownToggle class="text-uppercase">Stars Id: {{ starsId() }}</small>
+
+    <div class="dropdown-menu" ngbDropdownMenu>
+      <a class="dropdown-item" (click)="shouldDisplayStarsAlert = true">Update <span class="text-uppercase">Stars Id</span></a>
+    </div>
+  </span>
+</header>
+
+
+<ng-template #disclaimerModalContent let-disclaimerModalContent let-c="close" let-d="dismiss">
+  <form>
+    <div class="modal-header">
+      <h5 class="modal-title">IMPORTANT: CONTENT CONFIDENTIALITY</h5>
+    </div>
+    <div class="modal-body">
+      <p>The content on this website is confidential and should not be posted on other sites or shared.</p>
+    </div>
+    <div class="modal-footer">
+      <div class="row w-100 no-gutters">
+        <div class="col-auto col-sm-9 mb-2 mb-sm-0">
+          <div class="form-check pl-0">
+            <input name="hasCheckedDoNotDisplay" id="hasCheckedDoNotDisplay" class="mr-2" type="checkbox" [(ngModel)]="hasCheckedDoNotDisplay">
+            <label class="form-check-label small" for="hasCheckedDoNotDisplay">
+              Please don't show me this again.
+            </label>
+          </div>
+        </div>
+        <div class="w-100 d-block d-sm-none"></div>
+        <div class="col-auto col-sm-3">
+          <button type="submit" class="btn btn-primary small" (click)="saveDisclaimerAcknowledgement($event, disclaimerModalContent)">Close</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+<!-- *ngIf="shouldDisplayStarsAlert" -->
+<ngb-alert id="starsAlert" *ngIf="shouldDisplayStarsAlert === true" #starsAlert [dismissible]="true" (close)="closeHandler(starsAlert)" [type]="errorMessage ? 'danger' : 'dark'" class="animate-show animate-hide fixed-top">
+  <div class="d-flex justify-content-center align-items-center">
+    <form ngNativeValidate class="form-inline" #starsUpdateForm="ngForm" (reset)="starsIdField = starsId" (ngSubmit)="starsUpdateForm.valid && starsUpdateForm.dirty && saveStarsChanges($event, starsIdField, null, starsAlert)">
+      <div class="form-group">
+        <label for="starsIdField" class="small">
+          {{errorMessage ? errorMessage : "Tell us who you are! Enter your STARS ID: "}}
+        </label>
+      </div>
+      <div class="form-group mx-sm-3">
+        <div class="input-group-append">
+        <input #starsInput type="text" pattern="\d*" [(ngModel)]="starsIdField" max-length="9" min-length="9" maxlength="9" minlength="9" (focus)="errorMessage = null" placeholder="123456789" name="starsIdField" id="starsIdField" class="form-control form-control-sm" required />
+          <button *ngIf="starsIdField && starsUpdateForm.dirty" type="reset" class="btn small input-group-text">X</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary small">Save</button>
+      </div>
+    </form>
+  </div>
+</ngb-alert>
+
+<!-- *ngIf="shouldShowBrowserAlert" -->
+<ngb-alert id="browserAlert" *ngIf="shouldShowBrowserAlert" #browserAlert [dismissible]="true" (close)="closeBrowserAlertHandler(browserAlert)" [type]="'warning'" class="animate-show animate-hide fixed-top">
+  <div class="d-flex justify-content-center align-items-center">
+    We noticed you are using an old browser.&nbsp;&nbsp;<a href="https://www.google.com/intl/en_us/chrome/" target=_blank>Upgrade</a>&nbsp;now.
+  </div>
+</ngb-alert>
+
+<!-- *ngIf="shouldShowCourseWatchToCompletionMessage" -->
+<ngb-alert id="courseVideoCompletionMessage" *ngIf="shouldShowCourseWatchToCompletionMessage" #courseVideoCompletionMessage [dismissible]="true" (close)="closeCourseVideoCompletionMessageHandler(courseVideoCompletionMessage)" [type]="'warning'" class="animate-show animate-hide fixed-alert">
+  <div class="d-flex justify-content-center text-justify align-items-center">
+    Be sure to watch entire video (i.e., until the video returns to the title page) in order to ensure credit is recorded.  Credit for reviewing the video will be recorded in your STARS training history within 24-hours after the video has been completed.
+  </div>
+</ngb-alert>

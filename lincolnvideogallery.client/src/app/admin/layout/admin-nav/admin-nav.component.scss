@@ -1,0 +1,31 @@
+@import '../../../../assets/scss/bootstrap/variables';
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/bootstrap/mixins';
+:host {
+    aside {
+        width: 100%;
+        border-left: 1px solid rgba(0, 0, 0, 0.125);
+        @include media-breakpoint-down(sm) {
+            border: none;
+            margin-bottom: 1rem;
+        }
+        nav {
+            @include media-breakpoint-up(md) {
+                display: flex;
+            }
+            a {
+                color: $brand-lightest;
+                border-right: none;
+                border-left: none;
+                line-height: 32px;
+                &.active {
+                    background-color: $brand-lightest;
+                    background-position: 2% 47%;
+                    color: #ffffff;
+                    cursor: pointer;
+                    background-repeat: no-repeat;
+                }
+            }
+        }
+    }
+}

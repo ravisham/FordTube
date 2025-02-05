@@ -1,0 +1,70 @@
+@import '../../../assets/scss/bootstrap/variables';
+@import '../../../assets/scss/variables';
+:host {
+    .card {
+        height: 100%;
+        .card-body {
+            font-size: 0.625rem;
+            p.card-text {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-height: 3.125rem;
+            }
+            .card-title {
+                font-size: 0.8125rem;
+            }
+            .details {
+                font-size: 0.75rem !important;
+            }
+        }
+        .badge {
+            font-weight: 900;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            text-transform: uppercase;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            .top,
+            .bottom {
+                padding: 0.5rem 1rem;
+            }
+            .top {
+                font-size: 1.25rem;
+                color: $brand-light;
+                background-color: $white;
+            }
+            .bottom {
+                font-size: 0.875rem;
+                color: $white;
+                background-color: $brand-light;
+            }
+        }
+        .calendar-caption {
+            text-transform: uppercase;
+            padding: 0 1.25rem;
+            font-size: 0.6875rem;
+            font-weight: 600;
+        }
+        .card-calendars {
+            padding: 0.5625rem 1.25rem;
+            color: $brand-light;
+            font-size: 0.75rem;
+            >* {
+                text-align: center;
+            }
+            .yahoo {
+                border-top: 1px solid $yahoo-primary;
+            }
+            .ical {
+                border-top: 1px solid $ical-primary;
+            }
+            .gmail {
+                border-top: 1px solid $gmail-primary;
+            }
+            .outlook {
+                border-top: 1px solid $outlook-primary;
+            }
+        }
+    }
+}

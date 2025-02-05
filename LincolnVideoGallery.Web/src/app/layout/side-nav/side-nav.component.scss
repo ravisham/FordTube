@@ -1,0 +1,47 @@
+@import '../../../assets/scss/variables';
+:host {
+    visibility: hidden;
+    display: block;
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    z-index: 16;
+    outline: 0;
+    box-sizing: border-box;
+    overflow-y: auto;
+    transform: translate3d(-100%, 0, 0);
+    max-width: 320px;
+    width: 100%;
+    background: #ffffff;
+    border-right: 1px solid #c6d0da;
+    nav {
+        a {
+            color: $brand-lightest;
+            border-right: none;
+            border-left: none;
+            line-height: 32px;
+            div:not(.collapse) {
+                cursor: pointer;
+                background-repeat: no-repeat;
+            }
+            .collapse {
+                margin: 0 -1.25rem;
+                a {
+                    padding-left: 5.75rem !important;
+                }
+            }
+            .ignore-click {
+                &.expanded {
+                    margin-bottom: 0.75rem;
+                }
+            }
+            &:hover:not(.collapse.show) {
+                background-color: $brand-lightest;
+                color: #ffffff;
+                background-position: 2% 47%;
+                cursor: pointer;
+                background-repeat: no-repeat;
+            }
+        }
+    }
+}

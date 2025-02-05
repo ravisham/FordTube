@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.1220281">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Production|AnyCPU">
+      <Configuration>Production</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Staging|AnyCPU">
+      <Configuration>Staging</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\app\common\encryption\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <StartupCommand>yarn start</StartupCommand>
+    <JavaScriptTestFramework>Jasmine</JavaScriptTestFramework>
+    <ShouldRunBuildScript>false</ShouldRunBuildScript>
+    <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\lincolnvideogallery.client\</BuildOutputFolder>
+    <ShouldRunNpmInstall>false</ShouldRunNpmInstall>
+  </PropertyGroup>
+  <!-- Define different build commands based on the environment -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <BuildCommand>yarn build:debug</BuildCommand>
+  </PropertyGroup>
+  <!-- Define different build commands based on the environment -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Staging'">
+    <BuildCommand>yarn build:staging</BuildCommand>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Production'">
+    <BuildCommand>yarn build:production</BuildCommand>
+  </PropertyGroup>
+  <Target Name="RunYarnInstall" Condition=" '$(ShouldRunNpmInstall)' == 'true' " DependsOnTargets="PreNpmInstallCheck" Inputs="$(PackageJsonDirectory)\package.json" Outputs="$(NpmInstallCheck)">
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCodeNodeVersion" />
+    </Exec>
+    <Error Condition="'$(ErrorCodeNodeVersion)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'yarn'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(PackageJsonDirectory)" Command="yarn install">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCodeYarnInstall" />
+    </Exec>
+    <Touch Files="$(NpmInstallCheck)" Condition="'$(ErrorCodeYarnInstall)' == '0'" AlwaysCreate="true" />
+  </Target>
+  <Target Name="PreBuild" BeforeTargets="Build" DependsOnTargets="RunYarnInstall" />
+</Project>

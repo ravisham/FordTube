@@ -1,0 +1,92 @@
+@font-face {
+    font-family: 'Antenna-Regular';
+    src: url('./assets/fonts/antenna/AntennaRegular.eot');
+    src: url('./assets/fonts/antenna/AntennaRegular.eot?#iefix') format('embedded-opentype'), url('./assets/fonts/antenna/AntennaRegular.woff') format('woff'),
+        url('./assets/fonts/antenna/AntennaRegular.svg#fordngbs-antenna-re') format('svg');
+}
+
+@font-face {
+    font-family: 'Antenna-Light';
+    src: url('./assets/fonts/antenna/AntennaLight.eot');
+    src: url('./assets/fonts/antenna/AntennaLight.eot?#iefix') format('embedded-opentype'), url('./assets/fonts/antenna/AntennaLight.woff') format('woff'),
+        url('./assets/fonts/antenna/AntennaLight.svg#Antenna-Light') format('svg');
+}
+
+@font-face {
+    font-family: 'Antenna-ExtraLight';
+    src: url('./assets/fonts/antenna/AntennaExtraLight.eot');
+    src: url('./assets/fonts/antenna/AntennaExtraLight.eot?#iefix') format('embedded-opentype'), url('./assets/fonts/antenna/AntennaExtraLight.woff') format('woff'),
+        url('./assets/fonts/antenna/AntennaExtraLight.svg#Antenna-ExtraLight') format('svg');
+}
+
+@font-face {
+    font-family: 'Antenna-Bold';
+    src: url('./assets/fonts/antenna/AntennaBold.eot');
+    src: url('./assets/fonts/antenna/AntennaBold.eot?#iefix') format('embedded-opentype'), url('./assets/fonts/antenna/AntennaBold.woff') format('woff'),
+        url('./assets/fonts/antenna/AntennaBold.svg#Antenna-Bold') format('svg');
+}
+
+@font-face {
+    font-family: 'Antenna-Thin';
+    src: url('./assets/fonts/antenna/AntennaThin.eot');
+    src: url('./assets/fonts/antenna/AntennaThin.eot?#iefix') format('embedded-opentype'), url('./assets/fonts/antenna/AntennaThin.woff') format('woff'),
+        url('./assets/fonts/antenna/AntennaThin.svg#Antenna-Thin') format('svg');
+}
+
+@font-face {
+    font-family: 'Antenna-Black';
+    src: url('./assets/fonts/antenna/AntennaBlack.eot');
+    src: url('./assets/fonts/antenna/AntennaBlack.eot?#iefix') format('embedded-opentype'), url('./assets/fonts/antenna/AntennaBlack.woff') format('woff'),
+        url('./assets/fonts/antenna/AntennaBlack.svg#Antenna-Black') format('svg');
+}
+
+@font-face {
+    font-family: 'AntennaCond-Regular';
+    src: url('./assets/fonts/antenna/AntennaCondRegular.eot');
+    src: url('./assets/fonts/antenna/AntennaCondRegular.eot?#iefix') format('embedded-opentype'), url('./assets/fonts/antenna/AntennaCondRegular.woff2') format('woff2'),
+        url('./assets/fonts/antenna/AntennaCondRegular.woff') format('woff'), url('./assets/fonts/antenna/AntennaCondRegular.ttf') format('truetype'),
+        url('./assets/fonts/antenna/AntennaCondRegular.svg#AntennaCond-Regular') format('svg');
+}
+
+@font-face {
+    font-family: 'Antenna-ExtraLight';
+    src: url('./assets/fonts/antenna/AntennaExtraLight.eot');
+    src: url('./assets/fonts/antenna/AntennaExtraLight.eot?#iefix') format('embedded-opentype'), url('./assets/fonts/antenna/AntennaExtraLight.woff2') format('woff2'),
+        url('./assets/fonts/antenna/AntennaExtraLight.woff') format('woff'), url('./assets/fonts/antenna/AntennaExtraLight.ttf') format('truetype'),
+        url('./assets/fonts/antenna/AntennaExtraLight.svg#Antenna-ExtraLight') format('svg');
+}
+
+@font-face {
+    font-family: 'AntennaExtraCond-Regular';
+    src: url('./assets/fonts/antenna/AntennaExtraCondRegular.eot');
+    src: url('./assets/fonts/antenna/AntennaExtraCondRegular.eot?#iefix') format('embedded-opentype'), url('./assets/fonts/antenna/AntennaExtraCondRegular.woff2') format('woff2'),
+        url('./assets/fonts/antenna/AntennaExtraCondRegular.woff') format('woff'), url('./assets/fonts/antenna/AntennaExtraCondRegular.ttf') format('truetype'),
+        url('./assets/fonts/antenna/AntennaExtraCondRegular.svg#AntennaExtraCond-Regular') format('svg');
+}
+
+@font-face {
+    font-family: 'AntennaCond-ExtraLight';
+    src: url('./assets/fonts/antenna/AntennaCondExtraLight.eot');
+    src: url('./assets/fonts/antenna/AntennaCondExtraLight.eot?#iefix') format('embedded-opentype'), url('./assets/fonts/antenna/AntennaCondExtraLight.woff2') format('woff2'),
+        url('./assets/fonts/antenna/AntennaCondExtraLight.woff') format('woff'), url('./assets/fonts/antenna/AntennaCondExtraLight.ttf') format('truetype'),
+        url('./assets/fonts/antenna/AntennaCondExtraLight.svg#AntennaCond-ExtraLight') format('svg');
+}
+
+// Icon Fonts
+@font-face {
+    font-family: 'ford-icons';
+    src: url('./assets/fonts/fmc/ford-icons.eot?j0001s');
+    src: url('./assets/fonts/fmc/ford-icons.eot?j0001s#iefix') format('embedded-opentype'), url('./assets/fonts/fmc/ford-icons.woff?j0001s') format('woff'),
+        url('./assets/fonts/fmc/ford-icons.svg?j0001s#ford-icons') format('svg');
+    font-style: none;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'lincoln-icons';
+    src: url('./assets/fonts/lincoln/lincoln-icons.eot?j0001s');
+    src: url('./assets/fonts/lincoln/lincoln-icons.eot?j0001s#iefix') format('embedded-opentype'), url('./assets/fonts/lincoln/lincoln-icons.ttf?j0001s') format('truetype'),
+        url('./assets/fonts/lincoln/lincoln-icons.woff?j0001s') format('woff'), url('./assets/fonts/lincoln/lincoln-icons.svg?j0001s#lincoln-icons') format('svg');
+    font-style: none;
+    font-weight: normal;
+}

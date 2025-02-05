@@ -1,0 +1,60 @@
+@import '../variables';
+.video-list {
+    .card {
+        height: 100%;
+        cursor: pointer;
+        .card-img-wrapper {
+            position: relative;
+            .card-img-top {
+                @media (min-width: 1400px) {
+                    height: calc((720 / 1280) * 22vw - 30px) !important;
+                }
+                @include media-breakpoint-down(sm) {
+                    height: calc((720 / 1280) * 100vw - 30px) !important;
+                }
+            }
+            .card-title-ribbon {
+                background-color: rgba($brand-light, 0.95);
+                bottom: 0;
+                color: $white;
+                font-size: 0.75rem;
+                height: 3rem;
+                left: 0;
+                max-height: 3rem;
+                position: absolute;
+                width: 100%;
+                p {
+                    padding: 0.5625rem 1.25rem 0.5625rem 1.25rem;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
+                    display: -webkit-box;
+                    margin: 0;
+                    width: 92%;
+                    overflow: hidden;
+                }
+            }
+        }
+        .card-info {
+            padding: 0.5625rem 1.25rem;
+            color: $brand-light;
+            font-size: 0.75rem;
+            >* {
+                text-align: center;
+            }
+            .star {
+                font-size: 1rem;
+            }
+        }
+        .card-body {
+            font-size: 0.625rem;
+            padding-top: 0;
+            p.card-text {
+                overflow: hidden !important;
+                max-height: 2.75rem !important;
+            }
+        }
+        .star-container {
+            display: inline-flex;
+        }
+    }
+}

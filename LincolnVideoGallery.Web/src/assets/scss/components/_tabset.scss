@@ -1,0 +1,10 @@
+@import '../variables';
+.nav-tabs {
+  .nav-link {
+    &.active {
+      background-color: $brand-lightest !important;
+      color: #fff;
+      border-bottom: #dee2e6;
+    }
+  }
+}

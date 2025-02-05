@@ -1,0 +1,27 @@
+<div class="container">
+  <section class="text-center">
+    <h3 class="page-heading">Manage Videos</h3>
+  </section>
+</div>
+
+<ul class="list-group list-group-flush ">
+  <li class="list-group-item d-flex align-items-center" *ngFor="let v of videos; let i = index;">
+    <div class="order-1">
+      <img [src]="v.thumbnailUrl" class="img-fluid float-left" [routerLink]="['/watch']" [queryParams]="{'v': v.id}">
+    </div>
+    <div class="flex-fill order-2 ml-2 ml-md-5">
+      <div>
+        <h6 class="d-inline-block text-uppercase">{{v.title}}</h6>
+        <br>
+        <span>{{v.whenUploaded | date:"mediumDate"}}</span>
+      </div>
+      <div class="">
+        <div class="btn btn-sm btn-primary" [routerLink]="['/watch']" [queryParams]="{'v': v.id}">Watch</div>
+        <div class="btn btn-sm btn-primary my-2 my-sm-0 mx-sm-2" [routerLink]="['/edit-video']" [queryParams]="{'v': v.id}">Edit</div>
+        <div class="btn btn-sm btn-primary" (click)="removeVideo(i)">Delete</div>
+      </div>
+    </div>
+  </li>
+</ul>
+
+<app-load-more *ngIf="allowNextButton()" (loadMoreEvent)="loadMore()"></app-load-more>

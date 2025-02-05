@@ -1,0 +1,27 @@
+{
+  "name": "Lincoln Video Gallery",
+  "short_name": "Lincoln Video Gallery",
+  "description": "Lincoln Video Gallery",
+  "theme_color": "#F26147",
+  "background_color": "#fafafa",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "assets/img/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/img/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "lang": "en-US",
+  "orientation": "any",
+  "categories": ["entertainment", "video", "automotive"],
+  "dir": "ltr",
+  "prefer_related_applications": false
+}

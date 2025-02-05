@@ -1,0 +1,23 @@
+{
+  "DataSource": "Data Source=10.99.12.25;User ID=fordtube_func;Password=B25LP7sGyqmIocSUVVVF;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False",
+  "Provider": "Microsoft.EntityFrameworkCore.SqlServer",
+  "ContextName": "FordTubeDbContext",
+  "ContextDirectory": "./GENERATED",
+  "OutputDirectory": "./GENERATED/Entities",
+  "ContextNamespace": null,
+  "Namespace": null,
+  "Schemas": null,
+  "Tables": null,
+  "ProjectDirectory": ".",
+  "StartupProjectDirectory": ".",
+  "TargetFramework": null,
+  "Configuration": null,
+  "TargetRuntime": null,
+  "DataAnnotations": false,
+  "UseDatabaseNames": false,
+  "NoOnConfiguring": true,
+  "NoPluralize": true,
+  "Force": true,
+  "NoBuild": true,
+  "Verbose": false
+}

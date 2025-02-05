@@ -1,0 +1,33 @@
+<div class="row video-list">
+  <div *ngFor="let v of videos" class="col-md-4 mb-4">
+    <div class="card" [routerLink]="['/watch']" [queryParams]="{ v: v.id }">
+      <div class="card-img-wrapper">
+        <img class="card-img-top" [src]="v.thumbnailUrl" />
+        <div class="card-title-ribbon d-flex align-items-center align-content-center" title="{{ v.title }}">
+          <p class="d-flex">{{ v.title | truncate: 75 }}</p>
+          <i class="fas fa-chevron-right align-self-center"></i>
+        </div>
+      </div>
+      <div class="card-info d-flex align-items-center justify-content-between text-center">
+        <small><i class="fas fa-calendar-alt"></i>&nbsp;{{ v.whenUploaded | date: 'mediumDate' }}</small>
+        <small *ngIf="v.duration"><i class="fas fa-stopwatch"></i>&nbsp;{{ v.duration | duration }}</small>
+        <small *ngIf="v.ratingsCount > 0; else showNoRatings">
+          {{ v.averageRating | number: '1.1' }}&nbsp;Avg.&nbsp;|&nbsp;{{ v.ratingsCount | i18nPlural: { '=1': '1 Rating', other: '# Ratings' } }}
+        </small>
+        <ng-template #showNoRatings>
+          <small>No Ratings</small>
+        </ng-template>
+      </div>
+      <div class="card-body d-flex align-items-center">
+        <p class="card-text d-flex-md align-items-md-center" title="{{ v.description }}">{{ v.description || 'No description available' | truncate: 170 }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="showLoadingTiles" class="row video-list loading">
+  <div *ngFor="let v of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]" class="col-md-4 mb-4">
+      <div class="card"></div>
+  </div>
+</div>
+
+<app-load-more *ngIf="allowNextButton()" (loadMoreEvent)="moreVideos()"></app-load-more>

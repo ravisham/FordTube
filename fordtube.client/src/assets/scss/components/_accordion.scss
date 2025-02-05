@@ -1,0 +1,47 @@
+@import '../utilities/elevation';
+@import '../variables';
+ngb-accordion {
+  display: block;
+  background-color: transparent;
+  border: 1px solid #dedede;
+  padding: 30px;
+  .card {
+    border: none;
+    background-color: transparent;
+    .card-header {
+      border: none;
+      background-color: transparent;
+      a {
+        color: $brand-text-dark;
+      }
+      .btn {
+        @media (max-width: 768px) {
+          white-space: unset !important;
+        }
+      }
+      &.active {
+        background-color: transparent;
+      }
+    }
+    .card-body {
+      border-bottom: solid 1px #ebebeb;
+    }
+  }
+  .btn.btn-link {
+    outline: none;
+    min-height: auto;
+    max-width: auto;
+    padding: 10px 0;
+    text-transform: none;
+    font-size: 1rem;
+    color: inherit;
+    text-align: left;
+    display: block;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    &:active,
+    &:hover {
+      box-shadow: none !important;
+    }
+  }
+}

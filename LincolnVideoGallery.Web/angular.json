@@ -1,0 +1,241 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "ford-tube": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "wwwroot",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "polyfills": "src/polyfills.ts",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "src",
+                "output": "/"
+              },
+              {
+                "glob": "robots.txt",
+                "input": "src",
+                "output": "/"
+              },
+              {
+                "glob": "@fortawesome/fontawesome-free-webfonts/webfonts/*",
+                "input": "node_modules",
+                "output": "/assets/fonts"
+              },
+              {
+                "glob": "auth.wsl",
+                "input": "src",
+                "output": "/"
+              },
+              "src/manifest.json"
+            ],
+            "styles": [
+              {
+                "input": "./node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css"
+              },
+              {
+                "input": "./node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-solid.css"
+              },
+              {
+                "input": "./node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-regular.css"
+              },
+              {
+                "input": "./node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css"
+              },
+              {
+                "input": "src/styles.scss"
+              }
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": false,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "serviceWorker": true,
+              "fileReplacements": [
+                {
+                  "src": "src/environments/environment.ts",
+                  "replaceWith": "src/environments/environment.prod.ts"
+                }
+              ],
+              "ngswConfigPath": "ngsw-config.json"
+            },
+            "staging": {
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "extractCss": true,
+              "namedChunks": true,
+              "aot": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "buildOptimizer": false,
+              "serviceWorker": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "extractCss": true,
+              "namedChunks": true,
+              "aot": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "buildOptimizer": false,
+              "serviceWorker": false,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
+            },
+
+            "debug": {
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "extractCss": true,
+              "namedChunks": true,
+              "aot": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "buildOptimizer": false,
+              "serviceWorker": false,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.debug.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ford-tube:build",
+            "port": 3000
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ford-tube:build:production"
+            },
+            "staging": {
+              "browserTarget": "ford-tube:build:staging"
+            },
+            "development": {
+              "browserTarget": "ford-tube:build:development"
+            },
+            "debug": {
+              "browserTarget": "ford-tube:build:debug"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ford-tube:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "karmaConfig": "./karma.conf.js",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "scripts": [],
+            "styles": [
+              {
+                "input": "src/styles.scss"
+              }
+            ],
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "src",
+                "output": "/"
+              },
+              "src/manifest.json"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "ford-tube-e2e": {
+      "root": "",
+      "projectType": "application",
+      "cli": {},
+      "schematics": {},
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "./protractor.conf.js",
+            "devServerTarget": "ford-tube:serve"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    }
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "prefix": "app",
+      "styleext": "scss"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "app"
+    }
+  }
+}

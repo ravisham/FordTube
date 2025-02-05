@@ -1,0 +1,38 @@
+<div class="container">
+  <section class="text-center">
+    <h3 class="page-heading">Upcoming Live Events</h3>
+    <h6 class="text-muted">Link will activate 30 minutes prior to start time. Help Desk: 1-800-790-4357 (option 2, then 4).</h6>
+  </section>
+</div>
+<div class="row event-list">
+  <div class="col-md-4 mb-4" *ngFor="let e of events">
+    <div class="card">
+      <div class="card-body" *ngIf="e.description">
+        <div class="card-title d-flex align-items-center">
+          <div class="mr-auto">
+            <h6>{{ e.title }}</h6>
+            <h6 class="details">{{ e.startDate | date: 'longDate' }}</h6>
+            <h6 class="details">{{ e.startDate | date: 'shortTime' }}</h6>
+          </div>
+          <div class="badge">
+            <div class="top">{{ e.startDate | date: 'dd' }}</div>
+            <div class="bottom">
+              {{ e.startDate | date: 'MMM' }} <br />
+              {{ e.startDate | date: 'yyyy' }}
+            </div>
+          </div>
+        </div>
+        <p class="card-text" title="{{e.description | stripHtml}}" [innerHtml]="e.description | safeHtml"></p>
+      </div>
+      <p class="text-center">
+        <a class="text-center btn btn-primary small w100" target="_blank" href="{{e.eventUrl}}"> <i class="fab fa-youtube-square fa-lg align-middle mr-1 fa-fw"></i> Launch Webcast </a>
+      </p>
+      <div class="calendar-caption">Add Live Broadcast to Calendar</div>
+      <div class="card-calendars d-flex justify-content-between align-items-center text-center">
+        <a [href]="buildCalendarUrl(e) | safeUrl" class="btn btn-sm btn-white mx-auto no-transform ical w-25">iCal</a>
+        <a [href]="getCalendarEvents(e).google | safeUrl" target="_blank" class="btn btn-sm btn-white mx-auto no-transform gmail w-25">Google</a>
+        <a [href]="buildCalendarUrl(e) | safeUrl" class="btn btn-sm btn-white mx-auto no-transform outlook w-25">Outlook</a>
+      </div>
+    </div>
+  </div>
+</div>

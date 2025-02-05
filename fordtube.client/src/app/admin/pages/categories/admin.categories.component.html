@@ -1,0 +1,44 @@
+<div class="form-inline mb-3">
+  <div class="input-group col-md-6 justify-content-start">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Franchise</span>
+    </div>
+    <select [(ngModel)]="franchise" id="franchiseOptions" (change)="franchiseChanged();">
+      <option *ngFor="let f of franchiseCategories; let i = index;" [ngValue]="i">{{f}}</option>
+    </select>
+  </div>
+  <div class="input-group col-md-6 justify-content-end">
+    <button [routerLink]="['/admin/add-category/', franchise]" type="button" class="btn btn-primary btn-small">
+      <i class="fas fa-plus"></i>
+      Add Category
+    </button>
+  </div>
+</div>
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead class="bg-primary text-white">
+      <tr>
+        <th scope="col" class="cursor-pointer" (click)="setSortField('fullpath')">
+          Category Name&nbsp;<i *ngIf="sortField === 'fullpath'" [ngClass]="reverseSort ? 'fas fa-caret-up' : 'fas fa-caret-down'"></i>
+        </th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of categories | sortBy: sortField : reverseSort : true; let i = index">
+        <th scope="row">{{item.fullpath}}</th>
+        <td class="text-right">
+          <div class="btn-group">
+            <div class="btn-link ml-2 text-danger cursor-pointer" placement="left" [autoClose]="'outside'" container="body" [ngbPopover]="confirmDelteContent" popoverTitle="Delete Category">Delete</div>
+            <ng-template #confirmDelteContent>
+              <p>Are you sure you would like to delete {{item.fullpath}}</p>
+              <button class="btn btn-small btn-danger" (click)="removeCategory(item.categoryId);"><i class="fas fa-trash-alt"></i>
+                Delete
+              </button>
+            </ng-template>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

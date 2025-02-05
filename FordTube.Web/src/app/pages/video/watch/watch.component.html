@@ -1,0 +1,197 @@
+<section class="secondary pt-4">
+  <div class="container">
+    <div class="embed-responsive embed-responsive-16by9">
+      <div id="embed" class="embed-responsive-item"></div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-12">
+        <h1 class="lead mt-1">{{ videoDetails?.title }}</h1>
+      </div>
+      <div class="col-12 d-flex align-items-left align-items-md-center flex-column flex-md-row">
+        <div class="mr-md-auto py-2 px-3 pl-md-0 text-muted">{{ videoDetails?.totalViews }} views</div>
+        <time class="py-2 px-3 text-muted small">Published on {{ videoDetails?.whenUploaded | date: 'MMM d, y' }}</time>
+        <div class="py-2 px-3 small">
+          <span class="cursor-pointer" (click)="openReviewModal(review)">
+            <ngb-rating [(rate)]="videoDetails.rating" [max]="5" [readonly]="true">
+              <ng-template let-fill="fill" let-index="index">
+                <span class="star" [class.full]="fill === 100"> <span class="half" [style.width.%]="fill">&#9733;</span>&#9733; </span>
+              </ng-template>
+            </ngb-rating>
+            <span class="text-muted" *ngIf="videoDetails.totalRatings > 0; else showNoRatings">
+              &nbsp;{{ videoDetails.rating | number: '1.1-1' }}&nbsp;Avg.&nbsp;|&nbsp;{{ videoDetails.totalRatings || 0 | i18nPlural: { '=1': '1 Rating', other: '# Ratings' } }}
+            </span>
+            <ng-template #showNoRatings>
+              <span class="text-muted">&nbsp;No Ratings</span>
+            </ng-template>
+          </span>
+        </div>
+        <div class="py-2 px-3 small text-uppercase cursor-pointer" (click)="openShare(share)"><i class="fas fa-share pr-2"></i>Share</div>
+        <div [hidden]="!showAdminItems && !showAdminItemsBasedOnRevAccessEntities" ngbDropdown placement="bottom-right" class="py-2 px-3 small">
+          <div class="text-uppercase cursor-pointer" ngbDropdownToggle><i class="fas fa-cog pr-2"></i>Admin Tools</div>
+          <div ngbDropdownMenu>
+            <a class="dropdown-item" (click)="archive()"> <i class="fas fa-archive pr-2"></i>{{ videoDetails?.archived ? 'Unarchive' : 'Archive' }} </a>
+            <a class="dropdown-item" [routerLink]="['/edit-video']" [queryParams]="{ v: id }"> <i class="fas fa-pencil-alt pr-2"></i>Edit Video</a>
+          </div>
+        </div>
+        <div class="py-2 px-3 small text-uppercase cursor-pointer" [attr.disabled]="!showAdminItems && videoDetails?.flagged ? true : null" (click)="open(report)">
+          <i class="fas fa-flag pr-2"></i>{{ videoDetails?.flagged ? 'Video Reported' : 'Report Video' }}
+        </div>
+        <a class="py-2 px-3 small text-uppercase" href="{{ getVideoUrl() }}" *ngIf="videoDetails?.enableDownloads ? true : false" download>Download</a>
+        <ng-template #review let-reviewModal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Create Review</h4>
+            <button type="button" class="close" aria-label="Close" (click)="reviewModal.close()"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <ngb-alert *ngIf="reviewError" type="danger" [dismissible]="true" (close)="reviewError = null">{{ reviewError }}</ngb-alert>
+            <p class="mb-0">Rating</p>
+            <ngb-rating [(rate)]="currentRate" id="rating" [max]="5" [readonly]="false">
+              <ng-template let-fill="fill" let-index="index">
+                <span class="star lead" [class.full]="fill === 100"> <span class="half" [style.width.%]="fill">&#9733;</span>&#9733; </span>
+              </ng-template>
+            </ngb-rating>
+            <p>
+              Write your Comment
+            </p>
+            <textarea [(ngModel)]="commentText" required class="form-control" rows="5"></textarea>
+          </div>
+          <div class="modal-footer">
+            <app-submit-button loadingIconClass="fas fa-circle-notch fa-spin" cssClass="btn btn-sm btn-primary"  [class.disabled]="reviewSubmitLoading" [isLoading]="reviewSubmitLoading" text="Submit" (click)="submitReviewForm($event, reviewModal)"></app-submit-button>
+          </div>
+        </ng-template>
+        <ng-template #report let-flagModal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Inappropriate Video</h4>
+            <button type="button" class="close" aria-label="Close" (click)="flagModal.close()"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted">Please describe why this video contains inappropriate or proprietary content.</p>
+            <div class="form-group">
+              <div class="input-group"><textarea ngbAutofocus class="form-control" rows="5" [(ngModel)]="reportComment" id="reportComment"></textarea></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <app-submit-button loadingIconClass="fas fa-circle-notch fa-spin" cssClass="btn btn-sm btn-primary" [isLoading]="flagVideoSubmitLoading" text="Submit" (click)="flagModal.close('save')"></app-submit-button>
+          </div>
+        </ng-template>
+        <ng-template #share let-shareModal>
+          <div class="modal-body px-4 pb-2 pt-4">
+            <ngb-alert *ngIf="copySuccessMessage" type="success" [dismissible]="true" (close)="copySuccessMessage = null">{{ copySuccessMessage }}</ngb-alert>
+            <div ngbAutofocus class="border d-flex align-items-center">
+              <div class="mr-auto p-1">
+                <small>{{ startAtEnabled ? shareUrl + '&t=' + startAt : shareUrl }}</small>
+              </div>
+              <span class="p-2 text-primary text-uppercase cursor-pointer" (click)="copyShareLinkToClipboard()">Copy</span>
+            </div>
+          </div>
+          <div class="modal-footer px-4 pt-2 pb-2 d-flex justify-content-start">
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" [(ngModel)]="startAtEnabled" id="startAtEnabled" />
+              <label class="custom-control-label" for="startAtEnabled">Start at </label>
+            </div>
+            <input
+              #startAtDisplayInput
+              [ngClass]="{ disabled: !startAtEnabled }"
+              type="text"
+              placeholder="MM:SS"
+              class="form-control w-25 mr-auto"
+              maxlength="6"
+              [readonly]="!startAtEnabled"
+              [(ngModel)]="startAtDisplay"
+            />
+          </div>
+          <div class="small px-4">
+            <p class="small">
+              Check this box to make the link you share begin at a specific time. You can either manually enter the start time or pause the video at your preferred start time to
+              auto-populate this field.
+            </p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <p class="col-12 small" [innerHtml]="getHtmlDescription(videoDetails)"></p>
+      <dl *ngIf="videoDetails?.tags?.length > 0" class="col-12 small">
+        <dt><i class="fas fa-tags"></i>&nbsp;Tags</dt>
+        <dd>
+          <span *ngFor="let tag of videoDetails.tags">
+            <a class="mr-1 badge badge-secondary small" title="{{ tag }}" [routerLink]="['/search']" [queryParams]="{ q: tag, f: true }">{{ tag }}</a>
+          </span>
+        </dd>
+      </dl>
+      <dl *ngIf="videoDetails?.supplementalFiles?.length > 0" class="col-12 small mb-0">
+        <dt><i class="fas fa-paperclip"></i>&nbsp;Attached Files</dt>
+        <dd>
+          <span *ngFor="let file of videoDetails?.supplementalFiles">
+            <a class="mr-1 badge badge-secondaryr small" href="{{ downloadSupplementalFile(this.id,file.fileId,file.fileName) }}" download>{{ file.fileName }}</a>
+          </span>
+        </dd>
+      </dl>
+    </div>
+    <div class="row">
+      <details class="col">
+        <summary class="mb-3">Categories and more</summary>
+        <dl *ngIf="video?.categories?.length > 0" class="mt-3 pl-3">
+          <dt><i class="fas fa-folder-open"></i>&nbsp;Categories</dt>
+          <dd>
+            <span *ngFor="let category of video.categories | toArray">
+              <a class="mr-1 badge badge-secondary" title="{{ category.fullPath }}" [routerLink]="['/search']" [queryParams]="{ c: category.categoryId }">{{
+                category.fullPath
+              }}</a>
+            </span>
+          </dd>
+        </dl>
+        <div class="my-3 pl-3">
+          <a
+            class="d-sm-block my-3 my-md-0 mr-0 mr-md-3 text-primary d-md-inline-block"
+            ngbPopover="&lt;iframe title='FordTube video player' width='640' height='390' src='{{ currentHostName }}/standalone/embed?video_key={{
+              id
+            }}' frameborder='0' allowfullscreen&gt;&lt;/iframe&gt;"
+            popoverTitle="Embed Video"
+            [autoClose]="'outside'"
+          >
+            <i class="fas fa-code"></i>&nbsp;Embed Video
+          </a>
+          <a class="d-sm-block my-3 my-md-0 text-primary d-md-inline-block" [routerLink]="['/standalone']" [queryParams]="{ video_key: id }">
+            <i class="fas fa-play"></i>&nbsp;Standalone Player
+          </a>
+        </div>
+      </details>
+    </div>
+    <div class="row" *ngIf="!videoDetails?.isOfficial">
+      <div class="col">
+        <strong class="mb-3 summary">Disclaimer</strong>
+        <p class="my-3 pl-3 details">
+          This video is intended for viewing by Ford and Lincoln Dealers. It has not been reviewed or sanctioned by Ford Motor Company. It is not intended for consumer use or
+          advertising. Ford Motor Company is not responsible for the accuracy or the content of the video. The person posting the material takes responsibility for the accuracy and
+          content of the video. Ford Motor Company reserves the right to take down a posting in their sole and absolute discretion.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container" id="comments">
+    <h4 class="text-left text-primary mb-3">{{ comments && comments.length > 0 ? 'Comments' : 'No Comments' }}</h4>
+    <ul class="list-unstyled" *ngIf="comments && comments.length > 0">
+      <li class="media p-3 mb-3 bg-light" *ngFor="let c of comments">
+        <i class="fas fa-user-circle align-self-center mr-3 fa-2x"></i>
+        <div class="media-body small">
+          <div class="mb-2">
+            {{ c.firstName + ' ' + c.lastName | nameNormalize }}&nbsp;&nbsp;<span class="text-muted">{{ c['relativeDate'] }}</span>
+          </div>
+          {{ c.text }}
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+<ng-template #creditModal let-CreditInfoModal>
+  <div class="modal-body">
+    <p>You have completed the video. Credit will be recorded in your STARS training history within 24 hours.</p>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary small" (click)="CreditInfoModal.close()">Close</button>
+  </div>
+</ng-template>

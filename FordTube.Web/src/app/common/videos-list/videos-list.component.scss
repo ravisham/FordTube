@@ -1,0 +1,32 @@
+
+:host {
+
+      @keyframes placeHolderShimmer {
+        0%{
+            background-position: -468px 0
+        }
+        100%{
+            background-position: 468px 0
+        }
+      }
+      
+
+    .video-list.loading {
+        .card {
+            box-shadow:none !important;
+            border: none !important;
+            min-height: 200px;
+            max-height: 250px;
+            background-color: #adb5bd;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+            animation-iteration-count: infinite;
+            animation-name: placeHolderShimmer;
+            animation-timing-function: linear;
+            background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+            background-size: 1000px 250px;
+            position: relative;
+            overflow: hidden;
+        }
+    }
+}

@@ -1,0 +1,10 @@
+<app-carousel></app-carousel>
+<div class="container">
+  <section class="text-center">
+    <h3 class="page-heading">Recently Added Videos</h3>
+  </section>
+</div>
+<app-search-panel (searchEvent)="searchVideos($event);"></app-search-panel>
+<div class="container">
+  <app-videos-list [videos]="videos" [scrollId]="scrollId" [totalVideos]="totalVideos" (moreEvent)="loadMore($event);"></app-videos-list>
+</div>

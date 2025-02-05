@@ -1,0 +1,32 @@
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead class="bg-primary text-white">
+    <tr>
+      <th scope="col">Report Name</th>
+      <th scope="col" class="text-right"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Active Video Report</td>
+      <td class="text-right">
+        <button class="btn btn-primary btn-small" (click)="downloadReport('active')" [disabled]="isLoading['active']">
+          <i class="fas fa-download" *ngIf="!isLoading['active']"></i>
+          <i class="fas fa-spinner fa-spin" *ngIf="isLoading['active']"></i>
+          Download Report
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>Inactive/Deleted Video Report</td>
+      <td class="text-right">
+        <button class="btn btn-primary btn-small" (click)="downloadReport('inactive-deleted')" [disabled]="isLoading['inactive-deleted']">
+          <i class="fas fa-download" *ngIf="!isLoading['inactive-deleted']"></i>
+          <i class="fas fa-spinner fa-spin" *ngIf="isLoading['inactive-deleted']"></i>
+          Download Report
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

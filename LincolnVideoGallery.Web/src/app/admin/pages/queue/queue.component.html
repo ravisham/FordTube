@@ -1,0 +1,137 @@
+<div class="form-inline mb-3 d-flex justify-content-end">
+  <button class="btn btn-small btn-primary" (click)="openCsvModal(downloadCsvModal)">Download CSV</button>
+  <ng-template #downloadCsvModal let-csvModal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Download CSV</h4>
+      <button type="button" class="close" aria-label="Close" (click)="csvModal.close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <ngb-alert *ngIf="csvError" type="danger" [dismissible]="true" (close)="csvError = false">
+      There was an error while creating the CSV, please try again in a few moments.
+    </ngb-alert>
+    <ngb-alert *ngIf="csvStarted" type="info" [dismissible]="true" (close)="csvStarted = false">
+      Generating CSV. This will take some time, please wait...
+    </ngb-alert>
+    <form #form="ngForm" id="downloadCsv" name="downloadCsv" (ngSubmit)="downloadCsv(downloadCsvModel)">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="my-1 mr-2" for="fromUploadDate">Upload-Date Start</label>
+          <div class="input-group-append">
+            <input id="fromUploadDate" class="form-control" #fromUploadDate="ngModel" type="text" [(ngModel)]="downloadCsvModel.fromUploadDate" placeholder="yyyy-mm-dd" name="fromUploadDate"
+              ngbDatepicker #fromUploadDatePicker="ngbDatepicker" />
+            <button class="btn btn-primary" (click)="fromUploadDatePicker.toggle()" type="button">
+              <i class="far fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <hr class="px-4" />
+        <div class="form-group">
+          <label class="my-1 mr-2" for="toUploadDate">Upload-Date End</label>
+          <div class="input-group-append">
+            <input id="toUploadDate" class="form-control" #toUploadDate="ngModel" type="text" [(ngModel)]="downloadCsvModel.toUploadDate" placeholder="yyyy-mm-dd" name="toUploadDate" ngbDatepicker
+              #toUploadDatePicker="ngbDatepicker" />
+            <button class="btn btn-primary" (click)="toUploadDatePicker.toggle()" type="button">
+              <i class="far fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" [disabled]="downloadCsvModel.fromUploadDate === null || downloadCsvModel.toUploadDate === null">Download</button>
+      </div>
+    </form>
+  </ng-template>
+  <br />
+</div>
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead class="bg-primary text-white">
+      <tr>
+        <th scope="col" class="cursor-pointer" (click)="setSortField('title')">
+          Title&nbsp;<i *ngIf="sortField === 'title'" [ngClass]="reverseSort ? 'fas fa-caret-up' : 'fas fa-caret-down'"></i>
+        </th>
+        <th scope="col" class="cursor-pointer" (click)="setSortField('partOfSeries')">
+          Series&nbsp;<i *ngIf="sortField === 'partOfSeries'" [ngClass]="reverseSort ? 'fas fa-caret-up' : 'fas fa-caret-down'"></i>
+        </th>
+        <th scope="col" class="cursor-pointer" (click)="setSortField('uploadLater')">
+          Upload Later&nbsp;<i *ngIf="sortField === 'uploadLater'" [ngClass]="reverseSort ? 'fas fa-caret-up' : 'fas fa-caret-down'"></i>
+        </th>
+        <th scope="col" class="cursor-pointer" (click)="setSortField('uploadeDate')">
+          <ng-template #popUploadDate>
+            The date the video file was uploaded.
+          </ng-template>
+          <i class="fas fa-info-circle p-1 text-white-50" placement="top" container="body" [ngbPopover]="popUploadDate" triggers="mouseenter:mouseleave"></i>
+          Upload Date&nbsp;<i *ngIf="sortField === 'uploadeDate'" [ngClass]="reverseSort ? 'fas fa-caret-up' : 'fas fa-caret-down'"></i>
+        </th>
+        <th scope="col" class="cursor-pointer" (click)="setSortField('whenUploaded')">
+          <ng-template #popUpPublishDate>
+            The date the video was made available for users to watch.
+          </ng-template>
+          <i class="fas fa-info-circle p-1 text-white-50" placement="top" container="body" [ngbPopover]="popUpPublishDate" triggers="mouseenter:mouseleave"></i>
+          Publish Date&nbsp;<i *ngIf="sortField === 'whenUploaded'" [ngClass]="reverseSort ? 'fas fa-caret-up' : 'fas fa-caret-down'"></i>
+        </th>
+        <th scope="col" class="cursor-pointer" (click)="setSortField('whenModified')">
+          <ng-template #popUpWhenModified>
+            The date the video or video details was last changed.
+          </ng-template>
+          <i class="fas fa-info-circle p-1 text-white-50" placement="top" container="body" [ngbPopover]="popUpWhenModified" triggers="mouseenter:mouseleave"></i>
+          Modified Date&nbsp;<i *ngIf="sortField === 'whenModified'" [ngClass]="reverseSort ? 'fas fa-caret-up' : 'fas fa-caret-down'"></i>
+        </th>
+        <th scope="col" class="cursor-pointer" (click)="setSortField('uploadedBy')">
+          Uploaded By&nbsp;<i *ngIf="sortField === 'uploadedBy'" [ngClass]="reverseSort ? 'fas fa-caret-up' : 'fas fa-caret-down'"></i>
+        </th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="
+          let v of videos | sortBy: sortField:reverseSort:true;
+          let i = index
+        ">
+        <th scope="row">{{ v.title }}</th>
+        <th scope="row" class="text-center">
+          <i *ngIf="v.partOfSeries" class="fas fa-check text-muted"></i>
+        </th>
+        <th scope="row" class="text-center">
+          <i *ngIf="v.uploadLater" class="fas fa-check text-muted"></i>
+        </th>
+        <td>{{ v.uploadDate | date: "MMM d, y, h:mm a" }}</td>
+        <td>{{ v.whenUploaded | date: "MMM d, y, h:mm a" }}</td>
+        <td>{{ v.whenModified | date: "MMM d, y, h:mm a" }}</td>
+        <td>{{ v.uploadedBy | nameNormalize }}</td>
+        <td class="text-right">
+          <div ngbDropdown #dropdown="ngbDropdown" [autoClose]="'outside'" placement="bottom-right">
+            <div class="btn btn-light text-primary p-2" ngbDropdownToggle>
+              <i class="fas fa-ellipsis-v"></i>
+            </div>
+            <div ngbDropdownMenu>
+              <button class="dropdown-item cursor-pointer" [routerLink]="['/edit-video']" [queryParams]="{ v: v.id, r: 'true' }">
+                Edit
+              </button>
+              <button class="dropdown-item cursor-pointer" [routerLink]="['/watch']" [queryParams]="{ v: v.id }">
+                Watch
+              </button>
+              <button class="dropdown-item cursor-pointer" (click)="approveVideo(v.id)">
+                Approve
+              </button>
+              <button class="dropdown-item cursor-pointer" (click)="rejectVideo(v.id)">
+                Make Unofficial
+              </button>
+              <button class="dropdown-item cursor-pointer text-danger" placement="left" [autoClose]="'outside'" container="body" [ngbPopover]="confirmDelteContent" popoverTitle="Delete Video">
+                Delete
+              </button>
+            </div>
+          </div>
+          <ng-template #confirmDelteContent>
+            <p>Are you sure you would like to delete {{ v.title }}</p>
+            <button class="btn btn-small btn-danger" (click)="removeVideo(v.id)">
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<app-load-more *ngIf="allowNextButton()" (loadMoreEvent)="loadMore()"></app-load-more>

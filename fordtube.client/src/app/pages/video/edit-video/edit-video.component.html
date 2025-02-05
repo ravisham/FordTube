@@ -1,0 +1,282 @@
+<div class="container">
+  <section class="text-center"><h3 class="page-heading">Edit Video</h3></section>
+</div>
+
+<div class="container-fluid">
+  <div class="col-md-6">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group row">
+        <label for="video" class="col-sm-3 col-form-label">Video file</label>
+        <div class="col-sm-9 offset-sm-3">
+          <div class="custom-file">
+            <input type="file" id="video" (change)="checkFileSize($event.target.files) && upload($event.target.files)" class="form-control custom-file-input" accept="video/*" name="video" #fileInput />
+            <label class="custom-file-label" for="video">{{ fileLabel }}</label>
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="!fileChoosen && (form.touched || submitClicked)">Please choose file</div>
+          <div class="alert alert-danger" role="alert" *ngIf="videoFileSizeErrorMessage">{{ videoFileSizeErrorMessage }}</div>
+        </div>
+      </div>
+
+      <div *ngIf="form.value.videoFile != null" class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-3 pt-0"></legend>
+          <div class="col-sm-9">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" formControlName="is360" name="is360" id="is360" /> <label class="custom-control-label" for="is360"> Is this video 360&deg;? </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isOfficialRequest" class="form-group row">
+        <label for="businessOwnerName" class="col-sm-3 col-form-label">Business Owner Name <span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <input name="businessOwnerName" id="businessOwnerName" class="form-control" formControlName="businessOwnerName" type="text" required />
+          <div class="alert alert-danger" role="alert" *ngIf="!form.controls['businessOwnerName'].valid && (form.controls['businessOwnerName'].touched || submitClicked)">
+            Please provide Business Owner Name
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isOfficialRequest" class="form-group row">
+        <label for="businessOwnerEmail" class="col-sm-3 col-form-label">Business Owner Email <span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <input name="businessOwnerEmail" id="businessOwnerEmail" class="form-control" formControlName="businessOwnerEmail" type="text" required />
+          <div class="alert alert-danger" role="alert" *ngIf="!form.controls['businessOwnerEmail'].valid && (form.controls['businessOwnerEmail'].touched || submitClicked)">
+            Please provide Business Owner Email
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isOfficialRequest" class="form-group row">
+        <label for="contactsEmail" class="col-sm-3 col-form-label">Contacts Email</label>
+        <div class="col-sm-9">
+          <input name="contactsEmail" id="contactsEmail" class="form-control" formControlName="contactsEmail" type="text" />
+          <div class="alert alert-danger" role="alert" *ngIf="!isContactEmailsValid() && (form.controls['contactsEmail'].touched || submitClicked)">Incorrect Contacts Email</div>
+        </div>
+      </div>
+
+      <div *ngIf="isOfficialRequest" class="form-group row">
+        <label for="notes" class="col-sm-3 col-form-label">Notes</label>
+        <div class="col-sm-9"><textarea name="notes" class="form-control" id="notes" formControlName="notes" spellcheck="true" rows="10" cols="50"></textarea></div>
+      </div>
+
+      <div class="form-group row">
+        <label for="title" class="col-sm-3 col-form-label">Title <span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <input name="title" id="title" class="form-control" formControlName="title" type="text" required />
+          <div class="alert alert-danger" role="alert" *ngIf="!form.controls['title'].valid && (form.controls['title'].touched || submitClicked)">Please provide title</div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="description" class="col-sm-3 col-form-label">Description <span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <textarea name="description" class="form-control" id="description" formControlName="description" spellcheck="true" rows="10" cols="50">
+</textarea>
+          <div class="alert alert-danger" role="alert" *ngIf="!form.controls['description'].valid && (form.controls['description'].touched || submitClicked)">Please provide description</div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="tag" class="col-sm-3 col-form-label">Tags <span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <textarea name="tag" class="form-control" id="tag" formControlName="tag" spellcheck="true" rows="10" cols="50"></textarea>
+          <span class="text-muted">Minimum three tags. Use ; symbol between tags.</span>
+          <div class="alert alert-danger" role="alert" *ngIf="!isTagValid() && (form.controls['tag'].touched || submitClicked)">Please provide minimum three tags</div>
+        </div>
+      </div>
+
+      <div *ngIf="isOfficialRequest || showAdminItems" class="form-group row">
+        <label for="franchiseCategory" class="col-sm-3 col-form-label">Franchise</label>
+        <div class="col-sm-9">
+          <select name="franchiseCategory" class="form-control" formControlName="franchiseCategory" id="franchiseCategory" (change)="franchiseChanged()">
+            <option *ngFor="let c of franchiseCategories; let i = index" [ngValue]="i">{{ c.name }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div *ngIf="isOfficialRequest || showAdminItems" class="form-group row">
+        <label for="Categories" class="col-sm-3 col-form-label">Categories</label>
+        <div class="col-sm-9">
+          <select name="selected_category" class="form-control" formControlName="selected_category" id="Categories">
+            <option *ngFor="let c of categories; let i = index" [ngValue]="i">{{ c.fullpath }}</option>
+          </select>
+          &nbsp; <a href="#" (click)="addCategory()">Add Category</a>
+        </div>
+      </div>
+
+      <div *ngIf="(isOfficialRequest || showAdminItems) && selected_categories?.length > 0" class="form-group row">
+        <label class="col-sm-3 col-form-label">Selected Categories</label>
+        <div class="col-sm-9">
+          <ul>
+            <li class="text-secondary" *ngFor="let c of selected_categories; let i = index">
+              {{ c.fullpath }} <i class="fas fa-times-circle fa-lg text-danger cursor-pointer" (click)="removeSelectedCategory(i)"></i>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div *ngIf="isOfficialRequest || showAdminItems" class="form-group row">
+        <label for="publishDatePicker" class="col-sm-3 col-form-label">Publish Date <span class="text-danger">*</span></label>
+        <div class="col-sm-9">
+          <div class="input-group-append">
+            <input id="publishDatePicker"
+                   class="form-control"
+                   placeholder="yyyy-mm-dd"
+                   name="publishDatePicker"
+                   [markDisabled]="isPublishDateDisabled"
+                   formControlName="publishDate"
+                   ngbDatepicker
+                   #d1="ngbDatepicker" />
+
+            <button class="btn btn-secondary" (click)="d1.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="!form.controls['publishDate'].valid && (form.controls['publishDate'].touched || submitClicked)">Please provide publish date</div>
+        </div>
+      </div>
+
+      <div *ngIf="isOfficialRequest || showAdminItems" class="form-group row">
+        <label for="expirationDatePicker" class="col-sm-3 col-form-label">Expiration Date</label>
+        <div class="col-sm-9">
+          <div class="input-group-append">
+            <input id="expirationDatePicker"
+                   class="form-control"
+                   placeholder="yyyy-mm-dd"
+                   name="expirationDatePicker"
+                   [markDisabled]="isExpirationDateDisabled"
+                   formControlName="expirationDate"
+                   [readonly]="true"
+                   ngbDatepicker 
+                   #d2="ngbDatepicker" />
+            <button class="btn btn-secondary" (click)="d2.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="_boolexpiration">Date must be no longer than one year from Publish Date</div>
+        </div>
+      </div>
+
+      <div *ngIf="isOfficialRequest || showAdminItems" class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-3 pt-0"></legend>
+          <div class="col-sm-9">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" formControlName="enableDownload" name="enableDownload" id="enableDownload" />
+              <label class="custom-control-label" for="enableDownload"> Enable Downloads </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isOfficialRequest || showAdminItems" class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-3 pt-0"></legend>
+          <div class="col-sm-9">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" formControlName="restricted" name="restricted" id="restricted" />
+              <label class="custom-control-label" for="restricted"> Restricted Access </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isOfficialRequest && form.value.restricted" class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-3 pt-0">Choose Market Area:</legend>
+          <div class="col-sm-9">
+            <ul id="markets" class="list-unstyled ml-3">
+              <li *ngFor="let g of marketGroups; let i = index">
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" [checked]="marketGroupsCheckboxes[i]" class="custom-control-input" id="marketCheckbox_{{i}}" name="marketCheckbox_{{i}}" (click)="changeMarket(i)" />
+                  <label class="custom-control-label" for="marketCheckbox_{{i}}">{{ g.name }}</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isOfficialRequest && form.value.restricted" class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-3 pt-0">Choose Roles:</legend>
+          <div class="col-sm-9">
+            <ul id="roles" class="list-unstyled ml-3">
+              <li *ngFor="let g of roleGroups; let i = index">
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" [checked]="roleGroupsCheckboxes[i]" class="custom-control-input" id="roleCheckbox_{{i}}" name="roleCheckbox_{{i}}" (click)="changeRole(i)" />
+                  <label class="custom-control-label" for="roleCheckbox_{{i}}">{{ g.name }}</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="srtFile" class="col-sm-3 col-form-label">Add Closed Caption File</label>
+        <div class="col-sm-9 offset-sm-3">
+          <div class="custom-file">
+            <input type="file" id="srtFile" (change)="uploadSrt($event.target.files)" class="form-control custom-file-input" accept="cc/*.srt" name="srtFile" />
+            <label class="custom-file-label" for="srtFile">{{ srtfileLabel }}</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="thumbnail" class="col-sm-3 col-form-label">Thumbnail image</label>
+        <div class="col-sm-9 offset-sm-3">
+          <div class="custom-file">
+            <input type="file" id="thumbnail" (change)="uploadThumbnail($event.target.files)" class="form-control custom-file-input" accept="image/*" name="thumbnail" />
+            <label class="custom-file-label" for="thumbnail">{{ thumbnailFileLabel }}</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Attached files</label>
+        <div class="col-sm-9">
+          <div *ngFor="let f of videoDetails?.supplementalFiles; let i = index">
+             <a href="{{ downloadSupplementalFile(this.id,f.fileId,f.fileName) }}" download>{{ f.fileName }}</a> &nbsp; <!-- <button type="button" (click)="removeFile(i)" style="width:75px" class="btn btn-danger btn-small">Remove</button> -->
+          </div>
+        </div>
+        <div *ngIf="showFileAlert" class="alert alert-danger">
+          <strong>{{ filesMessage }}</strong>
+        </div>
+        <div *ngIf="videoDetails?.supplementalFiles?.length <= 2" class="col-sm-9 offset-sm-3">
+          <div class="custom-file">
+            <input type="file" id="docFile1" (change)="uploadFile($event.target.files, 1)" class="form-control custom-file-input" name="docFile1" #docFile1 />
+            <label class="custom-file-label" for="video">{{ docfileLabel1 }}</label>
+          </div>
+        </div>
+        <div *ngIf="videoDetails?.supplementalFiles?.length <= 1" class="col-sm-9 offset-sm-3">
+          <div class="custom-file">
+            <input type="file" id="docFile2" (change)="uploadFile($event.target.files, 2)" class="form-control custom-file-input" name="docFile2" #docFile2 />
+            <label class="custom-file-label" for="video">{{ docfileLabel2 }}</label>
+          </div>
+        </div>
+        <div *ngIf="videoDetails?.supplementalFiles?.length == 0" class="col-sm-9 offset-sm-3">
+          <div class="custom-file">
+            <input type="file" id="video" (change)="uploadFile($event.target.files, 3)" class="form-control custom-file-input" name="video" #docFile3 />
+            <label class="custom-file-label" for="video">{{ docfileLabel3 }}</label>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="loading" class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-3 pt-0"></legend>
+          <div class="col-sm-9">
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress">{{ progressLabel }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="offset-3 w-100">
+          <app-submit-button iconClass="icon ford-upload" loadingIconClass="fas fa-circle-notch fa-spin" cssClass="btn btn-primary float-right" [isLoading]="loading" text="&nbsp;Edit Video" (click)="onSubmit()"></app-submit-button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

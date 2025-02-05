@@ -1,0 +1,28 @@
+@import '../../../../assets/scss/utilities/elevation';
+:host {
+  .media {
+    @include elevation(1);
+  }
+  ngb-rating {
+    font-size: 1.25rem;
+    line-height: 1.25rem;
+  }
+  .d-sm-block {
+    @media (max-width: 576px) {
+      display: block !important;
+    }
+  }
+  .summary {
+    text-transform: uppercase;
+    font-size: 0.75rem !important;
+  }
+  .details {
+    font-size: 0.7rem !important;
+  }
+  [hidden] {
+    &.d-md-inline-block,
+    &.d-sm-block {
+      display: none !important;
+    }
+  }
+}

@@ -1,0 +1,66 @@
+@import 'variables';
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    padding-top: 62px;
+}
+
+section {
+    padding: 2.1875rem 0;
+    &.secondary {
+        background-color: $theme-secondary-bg !important;
+        border-bottom: 1px solid #dedede;
+    }
+    .heading,
+    .subheading,
+    .page-heading {
+        margin: 1.5rem auto !important;
+        text-align: center !important;
+        color: #616161;
+        font-family: 'Antenna-Regular', 'Antenna-ExtraLight', arial, helvetica, sans-serif;
+        font-weight: 500;
+        line-height: 1;
+        margin: 0 0 0.625rem 0;
+        position: relative;
+        text-shadow: rgba(0, 0, 0, 0.2) 1px 1px 1px;
+        white-space: normal;
+    }
+    .heading {
+        font-size: 2.25rem;
+    }
+    .page-heading {
+        font-size: 2rem;
+    }
+    .subheading {
+        font-size: 1.35rem;
+    }
+}
+
+.bg-white {
+    label {
+        color: $gray-600 !important;
+    }
+}
+
+.btn-outline-primary {
+    color: $brand-light !important;
+    &:hover {
+        color: $white !important;
+    }
+}
+
+.btn.btn-link.ngb-dp-arrow-btn {
+    color: $brand-light !important;
+}
+
+details {
+    font-size: 0.7rem;
+    summary {
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        font-family: 'Antenna-Regular';
+    }
+}

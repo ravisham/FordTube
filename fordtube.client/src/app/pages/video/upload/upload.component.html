@@ -1,0 +1,495 @@
+<div class="container">
+  <section class="text-center">
+    <h3 class="page-heading">Upload a Video</h3>
+    <div>
+      If you have questions about this form, check out the <i class="fas fa-info-circle text-secondary"></i> associated with each section. <br />Still have questions? Send us an email at
+      <a href="mailto:fordtube@ford.com?"> fordtube@ford.com </a>
+    </div>
+  </section>
+</div>
+
+<div class="container-fluid">
+  <div class="col-md-6">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group row">
+        <div class="col-sm-9">
+          <div *ngIf="loaded" class="alert alert-success">
+            <strong>Video Uploaded Successfully!</strong> <a *ngIf="videoId != ''" class="btn-link mx-2 text-primary" [routerLink]="['/watch']" [queryParams]="{ v: videoId }">Watch</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="isEmployee">
+        <div class="row">
+          <legend class="col-form-label col-sm-3 pt-0"></legend>
+          <div class="col-sm-9">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" formControlName="makeOfficial" (change)="makeOfficialChanged()" name="make-official" id="make-official" />
+              <label class="custom-control-label" for="make-official"> Make this an official video </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="isEmployee && form.value.makeOfficial">
+        <div class="row">
+          <legend class="col-form-label col-sm-3 pt-0"></legend>
+          <div class="col-sm-8">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" formControlName="part" name="part-control" id="part-control" />
+              <label class="custom-control-label" for="part-control"> Is this video part of a series? </label>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <ng-template #popPartOfSeries>
+              If this video is part of a series, you’ll need to fill out a separate form for each video.<br /><br /><b>NOTE: Post the videos in reverse order. Example: if you’d like video 1 of 5 to show first, then post 5 of 5 first, then 4 of 5 etc.</b>
+            </ng-template>
+            <i class="fas fa-info-circle text-secondary" placement="right" container="body" [ngbPopover]="popPartOfSeries" triggers="mouseenter:mouseleave"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="isEmployee">
+        <div class="row">
+          <legend class="col-form-label col-sm-3 pt-0"></legend>
+          <div class="col-sm-9">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" formControlName="placeholder" name="placeholder" id="placeholder" />
+              <label class="custom-control-label" for="placeholder"> Upload Video File later </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!form.value.placeholder" class="form-group row">
+        <div class="col-sm-8 offset-sm-3">
+          <div class="custom-file" style="overflow: hidden;">
+            <input type="file" id="video" (change)="checkFileSize($event.target.files) && upload($event.target.files)" class="form-control custom-file-input" accept="video/*" name="video" #fileInput />
+            <label class="custom-file-label" for="video">{{ fileLabel }}</label>
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="!fileChoosen && (form.touched || submitClicked)">Please choose file</div>
+          <div class="alert alert-danger" role="alert" *ngIf="videoFileSizeErrorMessage">{{ videoFileSizeErrorMessage }}</div>
+        </div>
+        <div class="col-sm-1">
+          <ng-template #popContentFile>
+            Browse your device to select your video file. <b>NOTE: videos will be removed from the site after six months.</b><br /><br />
+            The bigger the file size the longer it takes to upload. Remember – your video is being streamed on the web, it doesn’t need to be blockbuster-on-the-big-screen quality.
+          </ng-template>
+          <i class="fas fa-info-circle text-secondary" placement="right" container="body" [ngbPopover]="popContentFile" triggers="mouseenter:mouseleave"></i>
+        </div>
+      </div>
+
+      <div *ngIf="form.value.videoFile != null && !form.value.placeholder" class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-3 pt-0"></legend>
+          <div class="col-sm-8">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" formControlName="is360" name="is360" id="is360" /> <label class="custom-control-label" for="is360"> Is this video 360&deg;? </label>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <i class="fas fa-info-circle text-secondary"
+               placement="right"
+               container="body"
+               ngbPopover="360 videos are shot using specialized cameras. Only check this box if you’ve confirmed that your video is designed for 360 playback."
+               triggers="mouseenter:mouseleave"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row" *ngIf="isEmployee && form.value.makeOfficial">
+        <label for="businessOwnerName" class="col-sm-3 col-form-label">Business Owner Name <span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input name="businessOwnerName" id="businessOwnerName" class="form-control" formControlName="businessOwnerName" type="text" required />
+          <div class="alert alert-danger" role="alert" *ngIf="!form.controls['businessOwnerName'].valid && (form.controls['businessOwnerName'].touched || submitClicked)">
+            Please provide Business Owner Name
+          </div>
+        </div>
+        <div class="col-sm-1">
+          <ng-template #popContentOwnerName>
+            Provide the name of the business owner.<br /><br /><b>NOTE: This site is a platform used to host videos owned by you, the business owner. You are responsible for adhering to all Ford GIS standards.</b>
+          </ng-template>
+          <i class="fas fa-info-circle text-secondary" placement="right" container="body" [ngbPopover]="popContentOwnerName" triggers="mouseenter:mouseleave"></i>
+        </div>
+      </div>
+
+      <div class="form-group row" *ngIf="isEmployee && form.value.makeOfficial">
+        <label for="businessOwnerEmail" class="col-sm-3 col-form-label">Business Owner Email <span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input name="businessOwnerEmail" id="businessOwnerEmail" class="form-control" formControlName="businessOwnerEmail" type="text" required />
+          <div class="alert alert-danger" role="alert" *ngIf="!form.controls['businessOwnerEmail'].valid && (form.controls['businessOwnerEmail'].touched || submitClicked)">
+            Please provide Business Owner Email
+          </div>
+        </div>
+        <div class="col-sm-1">
+          <ng-template #popContentOwnerEmail>
+            Provide the email address of the business owner.<br /><br /><b>NOTE: This site is a platform used to host videos owned by you, the business owner. You are responsible for adhering to all Ford GIS standards.</b>
+          </ng-template>
+          <i class="fas fa-info-circle text-secondary" placement="right" container="body" [ngbPopover]="popContentOwnerEmail" triggers="mouseenter:mouseleave"></i>
+        </div>
+      </div>
+
+      <div class="form-group row" *ngIf="isEmployee && form.value.makeOfficial">
+        <label for="contactsEmail" class="col-sm-3 col-form-label">Contacts Email</label>
+        <div class="col-sm-8">
+          <input name="contactsEmail" id="contactsEmail" class="form-control" formControlName="contactsEmail" type="text" />
+          <div class="alert alert-danger" role="alert" *ngIf="!isContactEmailsValid() && (form.controls['contactsEmail'].touched || submitClicked)">Incorrect Contacts Email</div>
+        </div>
+        <div class="col-sm-1">
+          <i class="fas fa-info-circle text-secondary"
+             placement="right"
+             container="body"
+             ngbPopover="Provide emails of individuals that need to be kept ‘in the loop’. They will receive notification emails along with the business owner. Separate email addresses with a semicolon (;)."
+             triggers="mouseenter:mouseleave"></i>
+        </div>
+      </div>
+
+      <div class="form-group row" *ngIf="isEmployee && form.value.makeOfficial">
+        <label for="notes" class="col-sm-3 col-form-label">Notes</label>
+        <div class="col-sm-8"><textarea name="notes" class="form-control" id="notes" formControlName="notes" spellcheck="true" rows="10" cols="50"></textarea></div>
+        <div class="col-sm-1">
+          <i class="fas fa-info-circle text-secondary"
+             placement="right"
+             container="body"
+             ngbPopover="Provide a few lines of detail to give viewers an idea of what your video is about."
+             triggers="mouseenter:mouseleave"></i>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="title-field" class="col-sm-3 col-form-label">Title <span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <input name="title" id="title-field" class="form-control" formControlName="title" type="text" required />
+          <div class="alert alert-danger" role="alert" *ngIf="!form.controls['title'].valid && (form.controls['title'].touched || submitClicked)">Please provide title</div>
+        </div>
+        <div class="col-sm-1">
+          <i class="fas fa-info-circle text-secondary"
+             placement="right"
+             container="body"
+             ngbPopover="Enter the title of the video. Title will be prominently displayed on the video’s page and searchable on the site. Keep it short and sweet!"
+             triggers="mouseenter:mouseleave"></i>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="description-field" class="col-sm-3 col-form-label">Description <span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <textarea name="description-field" class="form-control" id="description" formControlName="description" spellcheck="true" rows="10" cols="50"></textarea>
+          <div class="alert alert-danger" role="alert" *ngIf="!form.controls['description'].valid && (form.controls['description'].touched || submitClicked)">Please provide description</div>
+        </div>
+        <div class="col-sm-1">
+          <i class="fas fa-info-circle text-secondary"
+             placement="right"
+             container="body"
+             ngbPopover="Provide a few lines of detail to give viewers an idea of what your video is about."
+             triggers="mouseenter:mouseleave"></i>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="tag" class="col-sm-3 col-form-label">Tags <span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <textarea name="tag" class="form-control" id="tag" formControlName="tag" spellcheck="true" rows="10" cols="50"></textarea>
+          <span class="text-muted">Minimum three tags. Use ; symbol between tags.</span>
+          <div class="alert alert-danger" role="alert" *ngIf="!isTagValid() && (form.controls['tag'].touched || submitClicked)">Please provide minimum three tags</div>
+        </div>
+        <div class="col-sm-1">
+          <ng-template #popContentTags>
+            A tag is a keyword assigned to your video. <br />
+            Tags:
+            <ul>
+              <li>Describe and highlight the content that’s in your video</li>
+              <li>Help users find your video when they search</li>
+              <li>Are extremely beneficial for getting additional views</li>
+              <li>Work best when they accurately describe the content of your video</li>
+            </ul>
+            <b>NOTE: Tags are meant to be keywords not complete sentences.</b>
+          </ng-template>
+          <i class="fas fa-info-circle text-secondary" placement="right" container="body" [ngbPopover]="popContentTags" triggers="mouseenter:mouseleave"></i>
+        </div>
+      </div>
+
+      <div *ngIf="form.value.makeOfficial" class="form-group row">
+        <label for="franchiseCategory" class="col-sm-3 col-form-label">Franchise</label>
+        <div class="col-sm-8">
+          <select name="franchiseCategory" class="form-control" formControlName="franchiseCategory" id="franchiseCategory" (change)="franchiseChanged()">
+            <option *ngFor="let c of franchiseCategories; let i = index" [ngValue]="i">{{ c.name }}</option>
+          </select>
+        </div>
+        <div class="col-sm-1">
+          <i class="fas fa-info-circle text-secondary"
+             placement="right"
+             container="body"
+             ngbPopover="Who is the audience? Ford Dealers? Lincoln Dealers? Or both?"
+             triggers="mouseenter:mouseleave"></i>
+        </div>
+      </div>
+
+      <!-- <div *ngIf="form.value.makeOfficial" class="form-group row">
+    <label for="Categories" class="col-sm-3 col-form-label">Categories</label>
+    <div class="col-sm-8">
+      <select name="selected_category" class="form-control" formControlName="selected_category" id="Categories">
+        <option *ngFor="let c of categories; let i = index" [ngValue]="i">{{ c.fullpath }}</option>
+      </select>
+      &nbsp; <a href="#" (click)="addCategory()">Add Category</a>
+    </div>
+    <div class="col-sm-1">
+      <i class="fas fa-info-circle text-secondary"
+         placement="right"
+         container="body"
+         ngbPopover="Check out the list. What category best fits your video’s personality?"
+         triggers="mouseenter:mouseleave"></i>
+    </div>
+  </div>
+
+  <div *ngIf="form.value.makeOfficial && selected_categories?.length > 0" class="form-group row">
+    <label class="col-sm-3 col-form-label">Selected Categories</label>
+    <div class="col-sm-9">
+      <ul class="list-unstyled">
+        <li *ngFor="let c of selected_categories; let i = index">{{ c.fullpath }} <i class="fas fa-times-circle fa-lg text-danger cursor-pointer" (click)="removeSelectedCategory(i)"></i></li>
+      </ul>
+    </div>
+  </div> -->
+
+      <div *ngIf="form.value.makeOfficial" class="form-group row">
+        <label for="publishDatePicker" class="col-sm-3 col-form-label">Publish Date <span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <div class="input-group-append">
+            <input id="publishDatePicker"
+                   class="form-control"
+                   placeholder="yyyy-mm-dd"
+                   name="publishDate"
+                   [markDisabled]="isPublishDateDisabled"
+                   formControlName="publishDate"
+                   ngbDatepicker
+                   #d1="ngbDatepicker" />
+
+            <button class="btn btn-primary w-25" (click)="d1.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="!form.controls['publishDate'].valid && (form.controls['publishDate'].touched || submitClicked)">Please provide publish date</div>
+        </div>
+        <div class="col-sm-1">
+          <i class="fas fa-info-circle text-secondary" placement="right" container="body" ngbPopover="This is the date the video will be live on the site." triggers="mouseenter:mouseleave"></i>
+        </div>
+      </div>
+      
+      <div *ngIf="form.value.makeOfficial" class="form-group row">
+        <label for="expirationDatePicker" class="col-sm-3 col-form-label">Expiration Date</label>
+        <div class="col-sm-8">
+          <div class="input-group-append">
+            <input id="expirationDatePicker"
+                   class="form-control"
+                   placeholder="yyyy-mm-dd"
+                   name="expirationDate"
+                   [markDisabled]="isExpirationDateDisabled"
+                   formControlName="expirationDate"
+                   [readonly]="true"
+                   ngbDatepicker 
+                   #d2="ngbDatepicker" />
+            <button class="btn btn-primary w-25" (click)="d2.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="_boolexpiration">Date must be no longer than one year from Publish Date</div>
+        </div>
+        <div class="col-sm-1">
+          <i class="fas fa-info-circle text-secondary"
+             placement="right"
+             container="body"
+             ngbPopover="Select a date you would like the video to be removed from the site (no longer than one year). If no date is selected, your video will be removed after a year by default. An email will be sent to the contact on record two weeks prior to the video being deleted. You will have the opportunity to request an extension."
+             triggers="mouseenter:mouseleave"></i>
+        </div>
+      </div>
+
+      <div *ngIf="form.value.makeOfficial" class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-3 pt-0"></legend>
+          <div class="col-sm-8">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" formControlName="enableDownloads" name="downloadCheckbox" id="downloadCheckbox" />
+              <label class="custom-control-label" for="downloadCheckbox"> Enable Downloads </label>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <i class="fas fa-info-circle text-secondary"
+               placement="right"
+               container="body"
+               ngbPopover="Check to allow other users the ability to download your video. If made downloadable, video is considered consumer-facing as there is no way to control the video file once it’s been downloaded."
+               triggers="mouseenter:mouseleave"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div *ngIf="form.value.makeOfficial" class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-3 pt-0"></legend>
+      <div class="col-sm-8">
+        <div class="custom-control custom-checkbox">
+          <input class="custom-control-input" type="checkbox" formControlName="restricted" name="restrictedCheckbox" id="restrictedCheckbox" />
+          <label class="custom-control-label" for="restrictedCheckbox"> Restricted Access </label>
+        </div>
+      </div>
+      <div class="col-sm-1">
+        <ng-template #popContentRestricted>
+          Go ahead – play favorites! Restrict viewer’s ability to view your video by Market Area and/or Job Role. <br /><br /><b>Choose Market Area<br />Choose Roles</b>
+        </ng-template>
+        <i class="fas fa-info-circle text-secondary" placement="right" container="body" [ngbPopover]="popContentRestricted" triggers="mouseenter:mouseleave"></i>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="form.value.makeOfficial && form.value.restricted" class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-3 pt-0">Choose Market Area:</legend>
+      <div class="col-sm-9">
+        <ul id="markets" class="list-unstyled ml-3">
+          <li *ngFor="let g of marketGroups; let i = index">
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" id="marketCheckbox_{{i}}" name="marketCheckbox_{{i}}" (click)="changeMarket(i)" />
+              <label class="custom-control-label" for="marketCheckbox_{{i}}">{{ g.name }}</label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="form.value.makeOfficial && form.value.restricted" class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-3 pt-0">Choose Roles:</legend>
+      <div class="col-sm-9">
+        <ul id="roles" class="list-unstyled ml-3">
+          <li *ngFor="let g of roleGroups; let i = index">
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" id="roleCheckbox_{{i}}" name="roleCheckbox_{{i}}" (click)="changeRole(i)" />
+              <label class="custom-control-label" for="roleCheckbox_{{i}}">{{ g.name }}</label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div> -->
+
+      <div *ngIf="form.value.makeOfficial" class="form-group">
+        <div class="row">
+          <label class="col-sm-3 col-form-label">Add Closed Caption File</label>
+          <div *ngIf="showSrtAlert" class="alert alert-danger">
+            <strong>{{ srtMessage }}</strong>
+          </div>
+          <div class="col-sm-8">
+            <div class="input-group-append w-100">
+              <div class="custom-file">
+                <input type="file" id="srtFile" (change)="uploadSrt($event.target.files)" class="form-control custom-file-input" accept=".srt" name="srtFile" #srtFile />
+                <label class="custom-file-label" for="srtFile">{{ srtfileLabel }}</label>
+              </div>
+              <button (click)="removeSrtFile()" class="btn btn-danger w-25 ml-2" type="button"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <i class="fas fa-info-circle text-secondary"
+               placement="right"
+               container="body"
+               ngbPopover="Add subtitles file to the video page."
+               triggers="mouseenter:mouseleave"></i>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="form.value.makeOfficial" class="form-group">
+        <div class="row">
+          <label class="col-sm-3 col-form-label">Attached files</label>
+          <div *ngIf="showFileAlert" class="alert alert-danger">
+            <strong>{{ filesMessage }}</strong>
+          </div>
+          <div class="col-sm-8">
+            <div class="input-group-append w-100">
+              <div class="custom-file">
+                <input type="file" id="docFile1" (change)="uploadFile($event.target.files, 1)" class="form-control custom-file-input" name="docFile1" #docFile1 />
+                <label class="custom-file-label" for="video">{{ docfileLabel1 }}</label>
+              </div>
+              <button (click)="removeDocument(1)" class="btn btn-danger w-25 ml-2" type="button"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <i class="fas fa-info-circle text-secondary"
+               placement="right"
+               container="body"
+               ngbPopover="Add supplemental files (e.g. PDF, Powerpoint) to the video page. Viewers will be able to download this file."
+               triggers="mouseenter:mouseleave"></i>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="form.value.makeOfficial" class="form-group row">
+        <div class="col-sm-8 offset-sm-3">
+          <div class="input-group-append w-100">
+            <div class="custom-file">
+              <input type="file" id="docFile2" (change)="uploadFile($event.target.files, 2)" class="form-control custom-file-input" name="docFile2" #docFile2 />
+              <label class="custom-file-label" for="video">{{ docfileLabel2 }}</label>
+            </div>
+            <button (click)="removeDocument(2)" class="btn btn-danger w-25 ml-2" type="button"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="form.value.makeOfficial" class="form-group row">
+        <div class="col-sm-8 offset-sm-3">
+          <div class="input-group-append w-100">
+            <div class="custom-file">
+              <input type="file" id="video" (change)="uploadFile($event.target.files, 3)" class="form-control custom-file-input" name="video" #docFile3 />
+              <label class="custom-file-label" for="video">{{ docfileLabel3 }}</label>
+            </div>
+            <button (click)="removeDocument(3)" class="btn btn-danger w-25 ml-2" type="button"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="terms" class="col-sm-3 col-form-label">Terms and Conditions: <span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+          <textarea class="form-control"
+                    id="terms"
+                    name="terms"
+                    rows="5"
+                    readonly>In consideration of the video being posted to Ford Tube and/or Lincoln Video Gallery, the person posting hereby forever assigns to Ford Motor Company all worldwide intellectual property rights in the video, including without limitation copyright, moral rights, personality rights and privacy rights, all without compensation from or liability to Ford Motor Company, and further irrevocably releases and forever discharges Ford Motor Company from any and all liability arising from any form of use of the video. The person posting represents that the posting is the person's original work and that it does not infringe the rights of any third party. Ford Motor Company reserves the right to take down a posting in their sole and absolute discretion.</textarea>
+        </div>
+        <div class="col-sm-1">
+          <i class="fas fa-info-circle text-secondary"
+             placement="right"
+             container="body"
+             ngbPopover="You must agree to the terms and conditions to post a video to the site."
+             triggers="mouseenter:mouseleave"></i>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-3 pt-0"></legend>
+          <div class="col-sm-9">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" formControlName="termsReviewed" name="terms-review" id="terms-review" />
+              <label class="custom-control-label" for="terms-review"> I agree to these terms and conditions </label>
+              <div class="alert alert-danger" role="alert" *ngIf="(form.touched || submitClicked) && !form.value.termsReviewed">You must accept the Terms and Conditions</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="loading" class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-3 pt-0"></legend>
+          <div class="col-sm-9">
+            <small class="form-text text-muted">The upload process may take several minutes to complete. Please do not close or navigate away from this page.</small>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress">{{ progressLabel }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="offset-3 w-100">
+          <app-submit-button iconClass="icon ford-upload" loadingIconClass="fas fa-circle-notch fa-spin" cssClass="btn btn-primary float-right" [isLoading]="loading" text="&nbsp;Upload Video" (click)="onSubmit()"></app-submit-button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

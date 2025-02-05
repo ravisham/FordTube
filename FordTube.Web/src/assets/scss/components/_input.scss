@@ -1,0 +1,27 @@
+.custom-file-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  overflow-wrap: break-word;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  white-space: pre;
+}
+
+[ngbdatepicker]+.btn,
+[ngbdatepicker]+*+.btn {
+  width: 45px;
+}
+
+
+input[type=checkbox] {
+  &:focus {
+    &:not(.custom-checkbox):not(.form-check-input) {
+      outline: 0;
+      outline-width: 0;
+      outline-style: none;
+    }
+  }
+}

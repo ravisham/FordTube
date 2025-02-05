@@ -1,0 +1,122 @@
+<div class="row">
+  <div class="col-12 d-md-none">
+    <button class="btn btn-primary mw-100 mb-3" (click)="addSlideToUI(t)"><i class="fas fa-plus"></i>&nbsp;New Slide</button>
+  </div>
+  <div class="col-12 col-md-11">
+    <ngb-tabset #t="ngbTabset">
+      <ngb-tab *ngFor="let slide of slides; let i = index" title="{{ 'Slide ' + (i + 1) }}" id="{{ i }}">
+        <ng-template ngbTabContent>
+          <form class="p-3" id="form-{{ i }}" #form="ngForm" name="form-{{ i }}" (onsubmit)="slide.isNew ? saveSlide(slide) : updateSlide(slide.id)">
+            <div class="form-group" *ngIf="slide.backgroundImageUrl">
+              <label for="backgroundImage-{{ i }}" class="d-block">Background Image</label> <img [src]="getBackgroundImageUrl(slide)" class="img-thumbnail img-fluid" />
+              <input class="form-control" id="backgroundImage-{{ i }}" type="hidden" name="backgroundImage-{{ i }}" [(ngModel)]="slide.backgroundImageUrl" />
+              <div class="btn-link ml-2 text-danger cursor-pointer mt-2" (click)="changeSlideImage(slide)">Remove Image</div>
+            </div>
+            <div class="form-group" *ngIf="slide.isNew || slide.isModifying">
+              <img *ngIf="fileInput.files.length >= 1" src="{{ 'data:image/png;base64,' + slide.backgroundImage }}" class="img-thumbnail mb-3 img-fluid" />
+              <div class="custom-file">
+                <input type="file" accept="image/jpg,.jpg" id="backgroundImage-{{ i }}" #fileInput (change)="onFileChange($event, slide)" class="custom-file-input" />
+                <input type="hidden" [(ngModel)]="slide.backgroundImage" name="backgroundImage-{{ i }}" />
+                <label class="custom-file-label" for="backgroundImage-{{ i }}">{{ fileInput.files.length >= 1 ? fileInput.files[0].name : 'Choose an Image' }}</label>
+                <small class="form-text text-muted">Allowed File Type: JPG</small>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="activeDate">Active Date</label>
+                <div class="input-group-append">
+                  <input
+                    id="activeDate"
+                    class="form-control"
+                    #activeDate="ngModel"
+                    type="text"
+                    [(ngModel)]="slide.activeDate"
+                    placeholder="yyyy-mm-dd"
+                    name="activeDate"
+                    ngbDatepicker
+                    #activeDatePicker="ngbDatepicker"
+                  />
+                  <button class="btn btn-primary" (click)="activeDatePicker.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="activeTime">Active Time</label>
+                <div class="input-group-append">
+                  <ngb-timepicker id="activeTime" name="activeTime" [(ngModel)]="slide.activeTime" [meridian]="true" [spinners]="false" [seconds]="false"></ngb-timepicker>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inactiveDate">Expiration Date</label>
+                <div class="input-group-append">
+                  <input
+                    id="inactiveDate"
+                    class="form-control"
+                    #inactiveDate="ngModel"
+                    type="text"
+                    [(ngModel)]="slide.inactiveDate"
+                    placeholder="yyyy-mm-dd"
+                    name="inactiveDate"
+                    ngbDatepicker
+                    #inactiveDatePicker="ngbDatepicker"
+                  />
+                  <button class="btn btn-primary" (click)="inactiveDatePicker.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inactiveTime">Expiration Time</label>
+                <div class="input-group-append">
+                  <ngb-timepicker id="inactiveTime" name="inactiveTime" [(ngModel)]="slide.inactiveTime" [meridian]="true" [spinners]="false" [seconds]="false"></ngb-timepicker>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="link-{{ i }}">Link</label> <input class="form-control" type="text" id="link-{{ i }}" name="link-{{ i }}" [(ngModel)]="slide.link" />
+            </div>
+            <div class="form-group">
+              <label for="textPosition-{{ i }}" class="d-block">Text Position</label>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="textPosition-{{ i }}-left" name="textPosition-{{ i }}" [value]="0" class="custom-control-input" [(ngModel)]="slide.textPosition" />
+                <label class="custom-control-label" for="textPosition-{{ i }}-left">Left</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="textPosition-{{ i }}-right" name="textPosition-{{ i }}" [value]="1" class="custom-control-input" [(ngModel)]="slide.textPosition" />
+                <label class="custom-control-label" for="textPosition-{{ i }}-right">Right</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="text-{{ i }}">Text</label>
+              <angular-editor [config]="editorConfig" name="text-{{ i }}" id="text-{{ i }}" [(ngModel)]="slide.text"></angular-editor>
+            </div>
+            <div class="form-group">
+              <div *ngIf="!slide.isNew" class="btn-link text-danger cursor-pointer d-inline-block mr-5" (click)="deleteSlide(slide.id)">Delete</div>
+              <div
+                *ngIf="slide.isNew || slide.isModifying || (form.form.dirty && !slide.isNew) || (form.form.touched && !slide.isNew)"
+                class="btn-link txt-dark cursor-pointer d-inline-block"
+                (click)="refreshSlides()"
+              >
+                Discard Changes
+              </div>
+              <button
+                type="submit"
+                *ngIf="form.form.dirty || form.form.touched || slide.isNew || slide.isModifying"
+                class="btn btn-primary float-right"
+                [innerText]="slide.isNew ? 'Save' : 'Save Changes'"
+                (click)="slide.isNew ? saveSlide(slide) : updateSlide(slide.id)"
+              ></button>
+            </div>
+          </form>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+  <div class="d-none d-md-block col-md-1">
+    <i
+      (click)="addSlideToUI(t)"
+      class="fas fa-plus fa-2x cursor-pointer text-primary"
+      [ngClass]="{ disabled: disableSlideAddition() }"
+      ngbTooltip="{{ disableSlideAddition() ? 'There is a maximum of 20 slides.' : 'Add New Slide to Carousel' }}"
+    ></i>
+  </div>
+</div>

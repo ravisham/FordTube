@@ -1,0 +1,42 @@
+table {
+  font-size: 0.85rem !important;
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem !important;
+  }
+
+  @media (max-width: 540px) {
+    font-size: 0.7rem !important;
+  }
+
+  tr {
+
+    th,
+    td {
+      padding: 0.5rem !important;
+
+      @media (max-width: 768px) {
+        padding: 0.25rem !important;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+
+      th,
+      td {
+        vertical-align: middle !important;
+
+        .dropdown-toggle {
+          min-height: auto !important;
+          width: auto !important;
+
+          &:after {
+            display: none !important;
+          }
+        }
+      }
+    }
+  }
+}

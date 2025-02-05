@@ -1,0 +1,40 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utilities/elevation';
+:host {
+    @include elevation(2);
+    visibility: hidden;
+    display: block;
+    position: fixed;
+    top: 0px;
+    bottom: 0;
+    color: #000;
+    max-height: 25%;
+    height: 100%;
+    z-index: 9999;
+    outline: 0;
+    padding: 5rem 3rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    transform: translate3d(100%, -100%, 0);
+    width: 100%;
+    background: #ffffff;
+    border-right: 1px solid #c6d0da;
+    input[type='search'] {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        outline: none !important;
+        padding: 0;
+        font-size: 1.625rem;
+        border-bottom: 1px solid #dedede !important;
+    }
+    .close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 2.25rem;
+    }
+    i.fa-search {
+        cursor: pointer;
+    }
+}

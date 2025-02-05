@@ -1,0 +1,19 @@
+@import "../variables";
+
+.star {
+  color: $color-default-rating;
+  position: relative;
+  display: inline-block;
+
+  .filled {
+    color: $color-ok-rating;
+  }
+
+  .half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: $color-ok-rating;
+  }
+
+}

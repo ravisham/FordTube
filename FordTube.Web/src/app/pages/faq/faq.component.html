@@ -1,0 +1,17 @@
+<section class="secondary mb-5">
+  <h3 class="page-heading"><i class="fas fa-2x text-primary align-middle fa-info-circle"></i>&nbsp;Ford Tube FAQ’s</h3>
+</section>
+
+<div *ngFor="let group of faqGroups">
+  <div class="container mb-5 p-4 border-0" *ngIf="group.faqs.length > 0">
+    <h5 *ngIf="group.faqs.length > 0">{{ group.name }}</h5>
+
+    <ngb-accordion #acc="ngbAccordion" (panelChange)="updateTracking($event)" class="border-0" *ngFor="let faq of group.faqs">
+      <ngb-panel class="card" title="{{ faq.question }}" id="{{ faq.question }}">
+        <ng-template ngbPanelContent>
+          <p [innerHtml]="faq.answer" class="text-dark"></p>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</div>

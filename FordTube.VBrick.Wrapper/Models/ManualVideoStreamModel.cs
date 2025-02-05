@@ -1,0 +1,20 @@
+﻿// Copyright (c) OneMagnify.  All Rights Reserved
+// Unauthorized copying of this file, via any medium is strictly prohibited
+
+namespace FordTube.VBrick.Wrapper.Models
+{
+
+    public class ManualVideoStreamModel
+    {
+
+        public string Name { get; set; }
+
+        public string Url { get; set; }
+
+        public string EncodingType { get; set; }
+
+        public bool IsMulticast { get; set; }
+
+    }
+
+}

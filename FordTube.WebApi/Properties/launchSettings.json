@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "FordTube.WebApi": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:6969",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Debug"
+      }
+    }
+  }
+}

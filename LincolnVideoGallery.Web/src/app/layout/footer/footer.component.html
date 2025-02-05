@@ -1,0 +1,114 @@
+<footer class="mt-5">
+  <section class="search py-5" (click)="focusInput()">
+    <div class="container">
+      <form class="form-inline">
+        <div class="input-group">
+          <label for="search">
+            <i class="fa fa-search"></i>
+          </label>
+          <input [(ngModel)]="query" #footerSearch (keyup.enter)="searchPressed()" name="search" id="search" type="search" class="form-control" placeholder="Search" />
+        </div>
+      </form>
+    </div>
+  </section>
+  <main class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <ul class="list-unstyled">
+            <li
+              class="strong text-uppercase mb-2"
+              (click)="sections.Resources.isCollapsed = !sections.Resources.isCollapsed"
+              [attr.aria-expanded]="!sections.Resources.isCollapsed"
+            >
+              Resources
+              <i class="float-right p-2 text-muted fas" [ngClass]="{ 'fa-chevron-down': sections.Resources.isCollapsed, 'fa-chevron-up': !sections.Resources.isCollapsed }"></i>
+            </li>
+            <ul [ngbCollapse]="sections.Resources.isCollapsed" class="list-unstyled">
+              <!--  <li>
+                <a [routerLink]="['/highest-rated']" [queryParams]="{ s: 'score' }">Highest Rated</a>
+              </li> -->
+              <li>
+                <a *ngIf="showDealerItems" routerLink="/upload">Upload a Video</a>
+              </li>
+              <li>
+                <a *ngIf="showDealerItems" routerLink="/manage">Manage Videos</a>
+              </li>
+              <li>
+                <a routerLink="/faq">FAQS</a>
+              </li>
+            </ul>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <ul class="list-unstyled">
+            <li
+              class="strong mb-2 text-uppercase"
+              (click)="sections.VideoCategories.isCollapsed = !sections.VideoCategories.isCollapsed"
+              [attr.aria-expanded]="!sections.VideoCategories.isCollapsed"
+            >
+              Video Categories
+              <i
+                class="float-right p-2 text-muted fas"
+                [ngClass]="{ 'fa-chevron-down': sections.VideoCategories.isCollapsed, 'fa-chevron-up': !sections.VideoCategories.isCollapsed }"
+              ></i>
+            </li>
+            <ul [ngbCollapse]="sections.VideoCategories.isCollapsed" class="list-unstyled">
+              <li *ngFor="let c of categories">
+                <a [routerLink]="['/category']" [queryParams]="{ c: c.categoryId }">{{ c.fullpath }}</a>
+              </li>
+            </ul>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <ul class="list-unstyled">
+            <li
+              class="strong mb-2 text-uppercase"
+              (click)="sections.RelatedSites.isCollapsed = !sections.RelatedSites.isCollapsed"
+              [attr.aria-expanded]="!sections.RelatedSites.isCollapsed"
+            >
+              Related Sites
+              <i
+                class="float-right p-2 text-muted fas"
+                [ngClass]="{ 'fa-chevron-down': sections.RelatedSites.isCollapsed, 'fa-chevron-up': !sections.RelatedSites.isCollapsed }"
+              ></i>
+            </li>
+            <ul [ngbCollapse]="sections.RelatedSites.isCollapsed" class="list-unstyled">
+              <li>
+                <a (click)="lincolnClick()">Ford Tube</a>
+              </li>
+              <li>
+                <a (click)="fmcClick()">FMCDealer</a>
+              </li>
+            </ul>
+          </ul>
+        </div>
+        <div *ngIf="showAdminItems" class="col-md-3">
+          <ul class="list-unstyled" class="list-unstyled">
+            <li class="strong mb-2 text-uppercase" (click)="sections.Admin.isCollapsed = !sections.Admin.isCollapsed" [attr.aria-expanded]="!sections.Admin.isCollapsed">
+              Ford Admin
+              <i class="float-right p-2 text-muted fas" [ngClass]="{ 'fa-chevron-down': sections.Admin.isCollapsed, 'fa-chevron-up': !sections.Admin.isCollapsed }"></i>
+            </li>
+            <ul [ngbCollapse]="sections.Admin.isCollapsed" class="list-unstyled">
+              <li>
+                <a routerLink="/admin">Admin Tools</a>
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  <section class="copyright py-4">
+    <div class="container">
+      <ul class="list-inline text-muted">
+        <li class="list-inline-item">
+          &copy; {{ year }} Ford Motor Company
+        </li>
+        <li class="list-inline-item">
+          <a class="optanon-toggle-display text-muted text-decoration-none">Cookie Settings</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</footer>

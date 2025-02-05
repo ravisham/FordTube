@@ -1,0 +1,19 @@
+@import '../../../assets/scss/variables';
+:host {
+    ngb-accordion {
+        background-color: transparent;
+        .card-header {
+            background-color: transparent;
+        }
+        a {
+            color: $brand-text-dark;
+        }
+        p {
+            font-size: 0.75rem;
+        }
+    }
+    .card {
+        background-color: transparent;
+        box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15);
+    }
+}
